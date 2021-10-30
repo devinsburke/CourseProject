@@ -1,0 +1,52 @@
+#terse-icon {
+	display: inline-block !important;
+	background-image: url('chrome-extension://ofmkflgmpjcigcbfbopbfjbpfjadopcb/images/icon48x48.png');
+	background-repeat: no-repeat !important;
+	background-color: #fff0 !important;
+	background-position: right bottom !important;
+	border-radius: 0.5em !important;
+	padding: 1em !important;
+	height: 64px !important;
+	width: 64px !important;
+	position: fixed !important;
+	bottom: 3em !important;
+	right: 3em !important;
+	cursor: pointer;
+	opacity: 0.2 !important;
+	z-index: 999999 !important;
+	transition: 0.2s;
+}
+#terse-icon * {
+	color: #333 !important;
+	font: initial !important;
+	font-size: 1em !important;
+	font-family: 'open sans',helvetica,arial !important;
+}
+#terse-icon h1 {
+	display: none !important;
+	border: 0 !important;
+	font-weight: bold !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+#terse-icon ul {
+	display: none !important;
+	margin: 1em !important;
+	padding: initial !important;
+}
+#terse-icon:hover {
+	opacity: 1 !important;
+	background: #ffff !important;
+	border: solid 1px #000 !important;
+	cursor: default;
+	width: calc(50% - 3em) !important;
+	height: calc(50% - 3em) !important;
+	overflow: auto !important;
+	transition: 1s !important;
+}
+#terse-icon:hover h1 {
+	display: block !important;
+}
+#terse-icon:hover ul {
+	display: block !important;
+}
