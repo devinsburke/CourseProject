@@ -188,29 +188,29 @@ terse-insight-subtitle {
 	display: none !important;
 }
 
-	#terse-icon terse-bg::before {
-		display: block;
-		width: 150px;
-		height: 300px;
-		content: '';
-		background: #e1e1e1;
-		left: -100px;
-		top: -100px;
-		transform: rotate(45deg);
-		position: absolute;
-		z-index: 100;
-	}
-	#terse-icon terse-bg::after {
-		content: 'Σ';
-		font-size: 120px;
-		position: absolute;
-		z-index: 1000;
-		opacity: 1;
-		top: -20px;
-		left: 20px;
-		color: black !important;
-		font-weight: 600;
-	}
+#terse-icon terse-bg::before {
+  display: block;
+  width: 150px;
+  height: 300px;
+  content: '';
+  background: #e1e1e1;
+  left: -100px;
+  top: -100px;
+  transform: rotate(45deg);
+  position: absolute;
+  z-index: 100;
+}
+#terse-icon terse-bg::after {
+  content: 'Σ';
+  font-size: 120px;
+  position: absolute;
+  z-index: 1000;
+  opacity: 1;
+  top: -20px;
+  left: 20px;
+  color: black !important;
+  font-weight: 600;
+}
 
 #terse-icon terse-insight-subtitle {
 	display: block !important;
