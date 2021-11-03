@@ -114,6 +114,7 @@
 	z-index: 999999 !important;
 	transition: 0.1s;
 
+	box-sizing: content-box !important;
 	background-color: white !important;
     opacity: 1 !important;
     border-radius: 20px !important;

@@ -1,5 +1,14 @@
 var processor = getSummaryEntries();
-createTersePageElement(processor);
+document.body.appendChild(createTersePageElement(processor));
+
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+	if ((msg.from === 'popup') && (msg.subject === 'body')) {
+		var x = JSON.stringify();
+		console.log(createTersePageElement(processor));
+		console.log(x);
+		response({'element': createTersePageElement(processor).outerHTML});
+	}
+});
 
 function getSummaryEntries() {
 	var scraper = new TerseContentScraper();
@@ -43,6 +52,7 @@ function createTersePageElement(processor) {
 		ul.appendChild(li);
 	});
 	container.appendChild(ul);
-	
-	document.body.appendChild(container);
+
+	return container;
+	// document.body.appendChild(container);
 }
