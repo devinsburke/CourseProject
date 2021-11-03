@@ -28,14 +28,6 @@ function createTersePageElement(processor) {
 	title.innerHTML = document.title.split('-')[0].trim();
 	container.appendChild(title);
 
-	// var ul = document.createElement('ul');
-	// processor.getTopKDocuments().forEach(doc => {
-	// 	var li = document.createElement('li');
-	// 	li.appendChild(document.createTextNode(doc.original));
-	// 	ul.appendChild(li);
-	// });
-	// container.appendChild(ul);
-
 	var topDocs = processor.getTopKDocuments();
 	var originalWordCount = processor.documents.reduce((a,b) => a+b.words.length, 0);
 	var summaryWordCount = topDocs.reduce((a,b) => a+b.words.length, 0);
@@ -51,8 +43,6 @@ function createTersePageElement(processor) {
 		ul.appendChild(li);
 	});
 	container.appendChild(ul);
-
-	// Do stuff.
-
+	
 	document.body.appendChild(container);
 }

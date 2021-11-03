@@ -179,6 +179,7 @@ terse-insight-subtitle {
     border: 1px  solid #c3c3c3 !important;
     border-radius: 20px !important;
     padding: 2.5em !important;
+	min-width: 450px !important;
 }
 
 #terse-icon:hover span {
@@ -198,7 +199,7 @@ terse-insight-subtitle {
 	white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    max-width: 40vw !important;
+    max-width: 400px !important;
 	padding-left: 40px !important;
 }
 	#terse-icon:hover terse-bg::before {
