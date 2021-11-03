@@ -87,7 +87,7 @@ class TerseContentScraper {
                 var input  = item.getElementsByTagName("input").length;
 				var embed  = item.getElementsByTagName("embed").length;
 
-                if (img > p || li > p && !['ul','ol'].includes(tag)) {
+                if (img > p || li > p && !['ul','ol'].includes(item.tagName)) {
                     item.parentNode.removeChild(item);
                 } else if(input > Math.floor(p/3) ) {
                     item.parentNode.removeChild(item);
