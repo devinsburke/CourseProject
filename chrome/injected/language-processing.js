@@ -1,5 +1,3 @@
-const rNonAlpha = /[^A-Za-z]/g;
-
 class TerseNaturalLanguageProcessor {
 	constructor(stopwords=defaultStopwords) {
 		this.stopwords = stopwords;
@@ -9,17 +7,10 @@ class TerseNaturalLanguageProcessor {
 		if (removeStopwords)
 			words = this.removeStopwords(words);
 		
-		var countByWord = this.toVocabulary(words).map(
-			w => [w, words.filter(iw => iw == w).length]
-		);
-		return Object.fromEntries(countByWord);
-	}
-	
-	toWords(text) {
-		return text
-			.replace(rNonAlpha, ' ')
-			.split(' ')
-			.map(w => w);
+		var countByWord = new Map();
+		countByWord.innerLength = words.length;
+		words.forEach(w => countByWord.set(w, (countByWord.get(w)??0) + 1));
+		return countByWord;
 	}
 	
 	removeStopwords(listOfWords) {
@@ -38,10 +29,14 @@ class TerseNaturalLanguageProcessor {
 	getSimilarityMatrix(...bagOfWords) {
 		var length = bagOfWords.length;
 		var matrix = this.buildMatrix(length, 2);
+		matrix.innerLength = 0;
 		
 		for (var i = 0; i < length - 1; i++) {
+			var currentBag = bagOfWords[i];
+			matrix.innerLength += currentBag.innerLength;
+			matrix[i].innerLength = currentBag.innerLength;
 			for (var j = i + 1; j < length; j++) {
-				var similarity = this.getSimilarity(bagOfWords[i], bagOfWords[j]);
+				var similarity = this.getSimilarity(currentBag, bagOfWords[j]);
 				matrix[i][j] = similarity;
 				matrix[j][i] = similarity;
 			}
@@ -80,16 +75,17 @@ class TerseNaturalLanguageProcessor {
 	}
 	
 	getDotProduct(vector1, vector2) {
-		return vector1.reduce((accum, val, i) => accum + val*vector2[i], 0);
+		return vector1.reduce((accum,val,i) => accum + val*vector2[i] || accum, 0);
 	}
 	
 	scoreSimilarityMatrix(matrix, normalize=false) {
-		var scores = matrix.map(m => m.reduce((a,b) => a+b));
+		var average = matrix.innerLength / matrix.length;
+		var scores = matrix.map(m => m.reduce((a,b) => a + b*Math.log(m.innerLength/average) || a), 0);
 		return normalize ? this.normalizeScoreList(scores) : scores;
 	}
 	
 	normalizeScoreList(scores) {
-		var total = scores.reduce((a,b) => a+b);
+		var total = scores.reduce((a,b) => a+b||a, 0);
 		return scores.map(m => m / total);
 	}
 }

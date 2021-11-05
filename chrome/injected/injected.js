@@ -10,7 +10,7 @@ function getSummaryEntries() {
 	var processor = new TerseSentencesDocumentProcessor(text, 0.1);
 	if (processor.documents.length < 12)
 		return null;
-	return processor;
+	return processor;	
 }
 
 function createTersePageElement(processor) {
@@ -22,12 +22,17 @@ function createTersePageElement(processor) {
 	container.appendChild(title);
 
 	var ul = document.createElement('ul');
-	processor.getTopKDocuments().forEach(doc => {
+	var topDocs = processor.getTopKDocuments();
+	topDocs.forEach(doc => {
 		var li = document.createElement('li');
 		li.appendChild(document.createTextNode(doc.original));
 		ul.appendChild(li);
 	});
 	container.appendChild(ul);
-
+	
+	var originalWordCount = processor.documents.reduce((a,b) => a+b.words.length, 0);
+	var summaryWordCount = topDocs.reduce((a,b) => a+b.words.length, 0);
+	// Do stuff.
+	
 	document.body.appendChild(container);
 }
