@@ -4,7 +4,6 @@ function callback(obj) {
   document.getElementsByTagName('terse-bg')[0].setAttribute('content-after', 'Σ');
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
   chrome.tabs.query({ active: true, currentWindow: true }).then(tab => {
     console.log(tab[0]);
@@ -15,16 +14,3 @@ document.addEventListener('DOMContentLoaded', function () {
     );
   });
 });
-
-// chrome.storage.sync.get("color", ({ color }) => {
-//   changeColor.style.backgroundColor = color;
-// });
-
-// changeColor.addEventListener("click", async () => {
-//   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-//   chrome.tabs.sendMessage(
-//     tab.id,
-//     {from: 'popup', subject: 'body'},
-//     callback
-//   );
-// });
