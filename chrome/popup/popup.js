@@ -1,22 +1,30 @@
-let changeColor = document.getElementById("changeColor");
-
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
-});
-
-changeColor.addEventListener("click", async () => {
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: setPageBackgroundColor,
-  });
-});
-
-// The body of this function will be executed as a content script inside the
-// current page
-function setPageBackgroundColor() {
-  chrome.storage.sync.get("color", ({ color }) => {
-    document.body.style.backgroundColor = color;
-  });
+function callback(obj) {
+  console.log(obj);
+  document.body.innerHTML = obj.element;
+  document.getElementsByTagName('terse-bg')[0].setAttribute('content-after', 'Σ');
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  chrome.tabs.query({ active: true, currentWindow: true }).then(tab => {
+    console.log(tab[0]);
+    chrome.tabs.sendMessage(
+      tab[0].id,
+      {from: 'popup', subject: 'body'},
+      callback
+    );
+  });
+});
+
+// chrome.storage.sync.get("color", ({ color }) => {
+//   changeColor.style.backgroundColor = color;
+// });
+
+// changeColor.addEventListener("click", async () => {
+//   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+//   chrome.tabs.sendMessage(
+//     tab.id,
+//     {from: 'popup', subject: 'body'},
+//     callback
+//   );
+// });
