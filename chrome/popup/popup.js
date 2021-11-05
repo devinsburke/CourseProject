@@ -1,7 +1,7 @@
 function callback(obj) {
   console.log(obj);
   document.body.innerHTML = obj.element;
-  document.getElementsByTagName('terse-bg')[0].setAttribute('content-after', 'Σ');
+  document.getElementsByTagName('terse-bg')[0].setAttribute('data-display', 'Σ');
 }
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -83,7 +83,7 @@ terse-insight-subtitle {
   z-index: 100;
 }
 #terse-icon terse-bg::after {
-  content: attr(content-after);
+  content:  'Σ';
   font-size: 120px;
   position: absolute;
   z-index: 1000;

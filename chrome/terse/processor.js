@@ -2,17 +2,21 @@ function getSummaryEntries() {
 	var scraper = new TerseContentScraper();
 	var text = scraper.getContent(document.body.cloneNode(true));
 	if (text.length < 250)
-		return null;
-
+		return new TerseSentencesDocumentProcessor('', 0);
 	var processor = new TerseSentencesDocumentProcessor(text, 0.1);
 	if (processor.documents.length < 12)
-		return null;
+		processor.documents = [];
 	return processor;
 }
 
 function createTersePageElement(processor) {
 	var container = document.createElement('terse');
 	container.id = 'terse-icon';
+
+    var meta = document.createElement('meta');
+    meta.setAttribute('http-equiv', 'Content-Type');
+    meta.setAttribute('content', 'text/html; charset=UTF-8');
+    container.appendChild(meta);
 
 	var sp = document.createElement('span');
 	sp.classList.add('material-icons-outlined');
