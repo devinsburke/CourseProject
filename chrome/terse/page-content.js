@@ -1,11 +1,14 @@
 const rGoodContent = /article|body|content|entry|hentry|main|page|post|text|blog|story|column/i;
-const rBadContent  = /combx|comment|contact|reference|foot|footer|footnote|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
+const rBadContent  = /combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
 const rTrimSpace = /^\s+|\s+$/g;
+const textStopSelector = '[role]:not([role=main]),li > a:only-child,.caption,.copyright,.mw-jump-link,.noprint,.metadata,.infobox,.navigation-not-searchable,.reference-text,.references,frame,iframe,label,dialog,menu,dl,dt,sup,code,pre,link,style,object,h1,h2,h3,h4,h5,h6,script,cite,embed,combx,comment,contact,foot,footer,footnote,masthead,media,meta,outbrain,promo,related,scroll,shoutbox,sidebar,sponsor,shopping,tags,tool,widget,community,disqus,extra,header,menu,remark,rss,shoutbox,sidebar,sponsor,pager,popup';
 const rReduceSpace = /\s{2,}/g;
-const textStopSelector = '.reference-text,.references,link,style,object,h1,h2,h3,h4,h5,h6,script,cite,embed,combx,comment,contact,foot,footer,footnote,masthead,media,meta,outbrain,promo,related,scroll,shoutbox,sidebar,sponsor,shopping,tags,tool,widget,community,disqus,extra,header,menu,remark,rss,shoutbox,sidebar,sponsor,pager,popup';
 
 class TerseContentScraper {
     getContent(element) {
+		for (var el of element.querySelectorAll(textStopSelector))
+			el.parentNode.removeChild(el);
+		
         var allElements = element.querySelectorAll('p,td,pre,span,div');
 		var nodes = [];
         for (var i=0, node=null; (node = allElements[i]); i++) {
@@ -38,11 +41,8 @@ class TerseContentScraper {
 		if (!selection)
 			return '';
 		
-		for (var el of selection.querySelectorAll(textStopSelector))
-			el.parentNode.removeChild(el);
-		
 		this.removeCaptions(selection, 'form','table','ul','div');
-        return this.getText(selection);
+        return selection.innerText;
     }
     
     getText(e) {
