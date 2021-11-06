@@ -1,13 +1,24 @@
 const rGoodContent = /article|body|content|entry|hentry|main|page|post|text|blog|story|column/i;
-const rBadContent  = /combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
-const rTrimSpace = /^\s+|\s+$/g;
-const textStopSelector = '[role]:not([role=main]),li > a:only-child,.caption,.copyright,.mw-jump-link,.noprint,.metadata,.infobox,.navigation-not-searchable,.reference-text,.references,frame,iframe,label,dialog,menu,dl,dt,sup,code,pre,link,style,object,h1,h2,h3,h4,h5,h6,script,cite,embed,combx,comment,contact,foot,footer,footnote,masthead,media,meta,outbrain,promo,related,scroll,shoutbox,sidebar,sponsor,shopping,tags,tool,widget,community,disqus,extra,header,menu,remark,rss,shoutbox,sidebar,sponsor,pager,popup';
-const rReduceSpace = /\s{2,}/g;
-
+const rBadContent = /combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
+const stopSelectors = {
+	role: ['alert', 'alertdialog', 'banner', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
+	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'footer', 'frame', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'object', 'output', 'pre', 'script', 'style', 'sup'],
+	class: ['caption', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup''promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'tool', 'widget'],
+};
 class TerseContentScraper {
-    getContent(element) {
+	getContent(element) {
+		var textStopSelector = stopSelectors.tag.join(',');
+		textStopSelector += ',' + stopSelectors.role.map(e => '[role]:not([role=' + e + '])').join(',');
+		textStopSelector += ',' + stopSelectors.class.map(e => '.' + e).join(',');
+
 		for (var el of element.querySelectorAll(textStopSelector))
-			el.parentNode.removeChild(el);
+			if (el.parentNode)
+				el.parentNode.removeChild(el);
+
+		for (var el of element.querySelectorAll('li > a:only-child, p > a:only-child')) {
+			if (el.parentNode && [...el.parentNode.children].filter(c => c.innerText.trim()).length > 1)
+				el.parentNode.removeChild(el);
+        }
 		
         var allElements = element.querySelectorAll('p,td,pre,span,div');
 		var nodes = [];
@@ -46,7 +57,9 @@ class TerseContentScraper {
     }
     
     getText(e) {
-        return e.innerText.replace(rTrimSpace, '').replace(rReduceSpace, ' ');
+		return e.innerText.trim()
+			.replace(/ {2,}/g, ' ')
+			.replace(/[\r\n\t]+/g, '\n');
     }
 	
     scoreElement(e) {
@@ -61,10 +74,8 @@ class TerseContentScraper {
 			e.score += 5;
 		else if (['PRE','TD','BLOCKQUOTE'].includes(e.tagName))
 			e.score += 3;
-		else if (['ADDRESS','OL','UL','DL','DD','DT','LI','FORM'].includes(e.tagName))
+		else if (['OL','UL','DD','LI','FORM'].includes(e.tagName))
 			e.score -= 3;
-		else if (['H1','H2','H3','H4','H5','H6','TH'].includes(e.tagName))
-			e.score -= 5;
     }
 	
 	getTagConsumption(e, tag) {
