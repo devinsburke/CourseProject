@@ -1,3 +1,9 @@
+terse *, terse > *, terse#terse-icon *, terse, #terse-icon {
+    line-height: initial !important;
+    font-weight: initial !important;
+    font-size: initial !important;
+}
+
 #terse-icon {
 	display: inline-block !important;
 	background-image: url('chrome-extension://ofmkflgmpjcigcbfbopbfjbpfjadopcb/images/icon48x48.png');
@@ -88,7 +94,7 @@ terse-insight-subtitle {
     position: absolute !important;
     font-size: 42px !important;
     font-weight: 100 !important;
-	margin-top: -20px !important;
+	margin-top: -10px !important;
 	white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
@@ -139,8 +145,8 @@ terse-ul > terse-li {
     font-weight: 100 !important;
     line-height: 1.2 !important;
 	color: white !important;
-	margin-left: 33px !important;
-    margin-top: 44px !important;
+	margin-top: 57px !important;
+    margin-left: 46px !important;
 }
 
 #terse-invalid-page {
