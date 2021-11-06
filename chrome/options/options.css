@@ -61,6 +61,10 @@ div.container {
   z-index: 1;
 }
 
+h1, h2 {
+  user-select: none;
+}
+
 h1 {
   font-size: 100px;
   margin: 0;
