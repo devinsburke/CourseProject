@@ -1,7 +1,7 @@
 const rGoodContent = /article|body|content|entry|hentry|main|page|post|text|blog|story|column/i;
 const rBadContent  = /combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
 const rTrimSpace = /^\s+|\s+$/g;
-const textStopSelector = '[role]:not([role=main]),li > a:only-child,.caption,.copyright,.mw-jump-link,.noprint,.metadata,.infobox,.navigation-not-searchable,.reference-text,.references,frame,iframe,label,dialog,menu,dl,dt,sup,code,pre,link,style,object,h1,h2,h3,h4,h5,h6,script,cite,embed,combx,comment,contact,foot,footer,footnote,masthead,media,meta,outbrain,promo,related,scroll,shoutbox,sidebar,sponsor,shopping,tags,tool,widget,community,disqus,extra,header,menu,remark,rss,shoutbox,sidebar,sponsor,pager,popup';
+const textStopSelector = '[role]:not([role=main]),li > a:only-child,.caption,.copyright,.mw-jump-link,.noprint,.metadata,.infobox,.mw-revision,.navigation-not-searchable,.reference-text,.references,frame,iframe,label,dialog,menu,dl,dt,sup,code,pre,link,style,object,h1,h2,h3,h4,h5,h6,script,cite,embed,combx,comment,contact,foot,footer,footnote,masthead,media,meta,outbrain,promo,related,scroll,shoutbox,sidebar,sponsor,shopping,tags,tool,widget,community,disqus,extra,header,menu,remark,rss,shoutbox,sidebar,sponsor,pager,popup';
 const rReduceSpace = /\s{2,}/g;
 
 class TerseContentScraper {
