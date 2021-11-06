@@ -3,12 +3,12 @@ const rBadContent = /combx|comment|contact|reference|foot|footer|footnote|infobo
 const stopSelectors = {
 	role: ['alert', 'alertdialog', 'banner', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
 	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'footer', 'frame', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'object', 'output', 'pre', 'script', 'style', 'sup'],
-	class: ['caption', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup''promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'tool', 'widget'],
+	class: ['caption', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'tool', 'widget'],
 };
 class TerseContentScraper {
 	getContent(element) {
 		var textStopSelector = stopSelectors.tag.join(',');
-		textStopSelector += ',' + stopSelectors.role.map(e => '[role]:not([role=' + e + '])').join(',');
+		textStopSelector += ',' + stopSelectors.role.map(e => '[role=' + e + ']').join(',');
 		textStopSelector += ',' + stopSelectors.class.map(e => '.' + e).join(',');
 
 		for (var el of element.querySelectorAll(textStopSelector))
