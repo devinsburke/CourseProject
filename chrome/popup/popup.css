@@ -44,11 +44,11 @@ terse-invalid-page {
 #terse-icon * {
 	color: #333 !important;
 	font: initial !important;
-	font-size: 1em !important;
+	font-size: 1em;
 	font-family: 'Noto Sans', sans-serif !important;
 }
 
-#terse-icon h1 {
+#terse-icon terse-h1 {
 	border: 0 !important;
 	margin: 0 !important;
 	padding: 0 !important;
@@ -63,21 +63,24 @@ terse-invalid-page {
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   max-width: 485px !important;
-
   padding-left: 65px !important;
-  margin-top: 0px !important;
+  margin-top: -20px !important;
 }
 
-#terse-icon ul {
+#terse-icon terse-ul {
 	margin: 1em !important;
 	padding: initial !important;
   display: block !important;
 	margin-top: 30px !important;
   width: 530px;
 }
-	#terse-icon ul li:not(:last-child) {
+	#terse-icon terse-ul terse-li:not(:last-child) {
 		margin-bottom: 5px;
 	}
+  terse-ul > terse-li {
+    display: list-item !important;
+    font-size: 18px !important;
+  }
 
 terse-insight-subtitle {
 	display: none !important;
@@ -116,11 +119,11 @@ terse-insight-subtitle {
   font-style: italic !important;
 	background: black !important;
   height: 13px !important;
-  margin-left: 56px !important;
-  margin-top: 67px !important;
   font-size: 10px !important;
   font-weight: 100 !important;
   line-height: 1.2 !important;
 	color: white !important;
   width: 500px !important;
+	margin-left: 55px !important;
+  margin-top: 45px !important;
 }

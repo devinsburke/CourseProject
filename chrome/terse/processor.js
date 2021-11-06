@@ -30,14 +30,14 @@ function createTersePageElement(processor) {
     meta.setAttribute('content', 'text/html; charset=UTF-8');
     container.appendChild(meta);
 
-	var sp = document.createElement('span');
+	var sp = document.createElement('terse-span');
 	sp.classList.add('material-icons-outlined');
 	sp.innerHTML = 'Σ';
 	container.appendChild(sp);
 
 	var bg = document.createElement('terse-bg');
 	container.appendChild(bg);
-	var title = document.createElement('h1');
+	var title = document.createElement('terse-h1');
 	title.innerHTML = document.title.split(' - ')[0].trim();
 	container.appendChild(title);
 
@@ -45,9 +45,9 @@ function createTersePageElement(processor) {
 	insights.innerHTML = 'Terse reduced word count from ' + originalWordCount + ' to ' + summaryWordCount + ', reading time by ' + Math.round((originalWordCount - summaryWordCount)/200, 2) + ' minutes';
 	container.appendChild(insights);
 
-	var ul = document.createElement('ul');
+	var ul = document.createElement('terse-ul');
 	topDocs.forEach(doc => {
-		var li = document.createElement('li');
+		var li = document.createElement('terse-li');
 		li.appendChild(document.createTextNode(doc.original));
 		ul.appendChild(li);
 	});
