@@ -1,129 +1,132 @@
 html, body {
-  overflow-x: hidden;
-  margin: 0;
+    overflow-x: hidden;
+    margin: 0;
 }
 
 body {
-  overflow-y: scroll;
-  height: 400px;
-  width: 600px;
+    overflow-y: scroll;
+    height: 400px;
+    width: 600px;
 }
 
-body.invalid {
-  height: 72px;
-  overflow-y: auto !important;
-  width: 420px;
-}
+    body.invalid {
+        height: 72px;
+        overflow-y: auto !important;
+        width: 420px;
+    }
 
 terse-invalid-page {
-  font-size: 20px;
-  margin: 1em;
-  display: block;
-  font-weight: 300;
-  user-select: none;
+    font-size: 20px;
+    margin: 1em;
+    display: block;
+    font-weight: 300;
+    user-select: none;
 }
 
 #terse-icon {
-	display: inline-block !important;
-  background-repeat: no-repeat !important;
-  background-position: right bottom !important;
-  position: relative;
-  z-index: 999999 !important;
-  bottom: 1em !important;
-  right: 1em !important;
-  opacity: 1 !important;
-  background: #ffff !important;
-  cursor: default;
-  width: 600px !important;
-  overflow: auto !important;
-  transition: 1s !important;
-  padding: 2.5em !important;
-  min-width: 450px !important;
+    display: inline-block !important;
+    background-repeat: no-repeat !important;
+    background-position: right bottom !important;
+    position: relative;
+    z-index: 999999 !important;
+    bottom: 1em !important;
+    right: 1em !important;
+    opacity: 1 !important;
+    background: #ffff !important;
+    cursor: default;
+    width: 600px !important;
+    overflow: auto !important;
+    transition: 1s !important;
+    padding: 2.5em !important;
+    min-width: 450px !important;
 }
 
-#terse-icon * {
-	color: #333 !important;
-	font: initial !important;
-	font-size: 1em;
-	font-family: 'Noto Sans', sans-serif !important;
-}
+    #terse-icon * {
+        color: #333 !important;
+        font: initial !important;
+        font-size: 1em;
+        font-family: 'Noto Sans', sans-serif !important;
+    }
 
-#terse-icon terse-h1 {
-	border: 0 !important;
-	margin: 0 !important;
-	padding: 0 !important;
-  display: block !important;
-	z-index: 999;
-	opacity: 1 !important;
-	transition: all 2s ease !important;
-  position: absolute !important;
-  font-size: 42px !important;
-  font-weight: 100 !important;
-	white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  max-width: 485px !important;
-  padding-left: 65px !important;
-  margin-top: -20px !important;
-}
+    #terse-icon terse-h1 {
+        border: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        z-index: 999;
+        opacity: 1 !important;
+        transition: all 2s ease !important;
+        position: absolute !important;
+        font-size: 42px !important;
+        font-weight: 100 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 485px !important;
+        padding-left: 65px !important;
+        margin-top: -20px !important;
+    }
 
-#terse-icon terse-ul {
-	margin: 1em !important;
-	padding: initial !important;
-  display: block !important;
-	margin-top: 30px !important;
-  width: 530px;
-}
-	#terse-icon terse-ul terse-li:not(:last-child) {
-		margin-bottom: 5px;
-	}
-  terse-ul > terse-li {
+    #terse-icon terse-ul {
+        margin: 1em !important;
+        padding: initial !important;
+        display: block !important;
+        margin-top: 30px !important;
+        width: 530px;
+    }
+
+        #terse-icon terse-ul terse-li:not(:last-child) {
+            margin-bottom: 5px;
+        }
+
+terse-ul > terse-li {
     display: list-item !important;
     font-size: 18px !important;
-  }
+}
 
 terse-insight-subtitle {
-	display: none !important;
+    display: none !important;
 }
 
 #terse-icon span {
-	display: none !important;
+    display: none !important;
 }
 
 #terse-icon terse-bg::before {
-  display: block;
-  width: 150px;
-  height: 300px;
-  content: '';
-  background: #e1e1e1;
-  left: -100px;
-  top: -100px;
-  transform: rotate(45deg);
-  position: absolute;
-  z-index: 100;
+    display: block;
+    width: 150px;
+    height: 300px;
+    content: '';
+    background: #e1e1e1;
+    left: -100px;
+    top: -100px;
+    transform: rotate(45deg);
+    position: absolute;
+    z-index: 100;
 }
+
 #terse-icon terse-bg::after {
-  content:  'Σ';
-  font-size: 120px;
-  position: absolute;
-  z-index: 1000;
-  opacity: 1;
-  top: -20px;
-  left: 20px;
-  color: black !important;
-  font-weight: 600;
+    content: 'Σ';
+    font-size: 120px;
+    position: absolute;
+    z-index: 1000;
+    opacity: 1;
+    top: -20px;
+    left: 20px;
+    color: black !important;
+    font-weight: 600;
 }
 
 #terse-icon terse-insight-subtitle {
-	display: block !important;
-  font-style: italic !important;
-	background: black !important;
-  height: 13px !important;
-  font-size: 10px !important;
-  font-weight: 100 !important;
-  line-height: 1.2 !important;
-	color: white !important;
-  width: 500px !important;
-	margin-left: 55px !important;
-  margin-top: 45px !important;
+    display: block !important;
+    font-style: italic !important;
+    background: black !important;
+    height: 13px !important;
+    font-size: 10px !important;
+    font-weight: 100 !important;
+    line-height: 1.2 !important;
+    color: white !important;
+    width: 500px !important;
+    margin-left: 55px !important;
+    margin-top: 45px !important;
 }
