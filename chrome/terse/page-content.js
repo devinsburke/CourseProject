@@ -3,7 +3,7 @@ const rBadContent = /combx|comment|contact|reference|foot|footer|footnote|infobo
 const stopSelectors = {
 	role: ['alert', 'alertdialog', 'banner', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
 	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'footer', 'frame', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'object', 'ol', 'output', 'pre', 'script', 'style', 'sup'],
-	class: ['caption', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'tool', 'widget'],
+	class: ['caption', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'tool', 'widget', 'wikitable'],
 };
 class TerseContentScraper {
 	getContent(element) {
@@ -19,18 +19,18 @@ class TerseContentScraper {
 			if (el.parentNode && [...el.parentNode.children].filter(c => c.innerText.trim()).length > 1)
 				el.parentNode.removeChild(el);
         }
-		
+
         var allElements = element.querySelectorAll('p,td,pre,span,div');
 		var nodes = [];
         for (var i=0, node=null; (node = allElements[i]); i++) {
             var str = node.className + node.id;
 			var innerText = this.getText(node);
-			
+
 			if (!node.parentNode || innerText.length < 25)
 				continue;
 			if (str.search(rBadContent) != -1 && str.search(rGoodContent) == -1)
 				continue;
-			
+
 			var grandParentNode = node.parentNode.parentNode;
 			[node.parentNode, node.parentNode.parentNode].forEach(n => {
 				if (n && n.score == null) {
@@ -47,21 +47,21 @@ class TerseContentScraper {
             if (grandParentNode)
                 grandParentNode.contentScore += contentScore/2;
         }
-		
+
 		var selection = nodes.sort((a,b) => b.contentScore-a.contentScore)[0];
 		if (!selection)
 			return '';
-		
+
 		this.removeCaptions(selection, 'form','table','ul','div');
         return selection.innerText;
     }
-    
+
     getText(e) {
 		return e.innerText.trim()
 			.replace(/ {2,}/g, ' ')
 			.replace(/[\r\n\t]+/g, '\n');
     }
-	
+
     scoreElement(e) {
 		e.score = 0;
 		[e.className, e.id, e.tagName].forEach(s => {
@@ -77,11 +77,11 @@ class TerseContentScraper {
 		else if (['OL','UL','DD','LI','FORM'].includes(e.tagName))
 			e.score -= 3;
     }
-	
+
 	getTagConsumption(e, tag) {
 		return [...e.querySelectorAll(tag)].reduce((a,v) => a + this.getText(v).length, 0) / this.getText(e).length;
 	}
-	
+
     removeCaptions(e, ...tags) {
         var nodes = e.querySelectorAll(tags.join(','));
 
