@@ -4,8 +4,8 @@ html, body {
 }
 
 body {
-  overflow-y: scroll;
-  height: 400px;
+  overflow-y: auto;
+  max-height: 400px;
   width: 600px;
 }
 
