@@ -72,4 +72,14 @@ async function generateOptions() {
   });
 }
 
+function generateAbout() {
+  var container = document.getElementById('about');
+  terseAbout.forEach(a => {
+    var elem = document.createElement('li');
+    elem.innerHTML = a;
+    container.appendChild(elem);
+  })
+}
+
 generateOptions();
+generateAbout();

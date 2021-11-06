@@ -110,3 +110,26 @@ li > span {
 slider, input {
   vertical-align: middle;
 }
+
+ul#about {
+  padding: 0 3em 0 3em;
+}
+ul#about > li {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+span.icon {
+  font-family: 'Material icons' !important;
+  user-select: none;
+  font-size: 24px;
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-top: -2px;
+  display: inline-block;
+}
+
+div.card > span {
+  font-size: 18px;
+  vertical-align: middle;
+}

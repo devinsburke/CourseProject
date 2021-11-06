@@ -120,7 +120,7 @@ terse-insight-subtitle {
 
 #terse-icon:hover ul {
 	display: block !important;
-
+	list-style-type: circle !important;
 	margin-top: 30px !important;
 }
 
