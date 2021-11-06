@@ -10,6 +10,18 @@ function getSummaryEntries() {
 }
 
 function createTersePageElement(processor) {
+	var topDocs = processor.getTopKDocuments();
+	var originalWordCount = processor.documents.reduce((a,b) => a+b.words.length, 0);
+	var summaryWordCount = topDocs.reduce((a,b) => a+b.words.length, 0);
+    if (summaryWordCount == 0) {
+        var invalidElement = document.createElement('terse-invalid-page');
+        if (document.location.pathname == '/')
+            invalidElement.innerHTML = 'Text not summarized on this landing page.';
+        else 
+            invalidElement.innerHTML = 'No text found to summarize on this page.';
+        return invalidElement;
+    }
+
 	var container = document.createElement('terse');
 	container.id = 'terse-icon';
 
@@ -26,12 +38,8 @@ function createTersePageElement(processor) {
 	var bg = document.createElement('terse-bg');
 	container.appendChild(bg);
 	var title = document.createElement('h1');
-	title.innerHTML = document.title.split('-')[0].trim();
+	title.innerHTML = document.title.split(' - ')[0].trim();
 	container.appendChild(title);
-
-	var topDocs = processor.getTopKDocuments();
-	var originalWordCount = processor.documents.reduce((a,b) => a+b.words.length, 0);
-	var summaryWordCount = topDocs.reduce((a,b) => a+b.words.length, 0);
 
 	var insights = document.createElement('terse-insight-subtitle');
 	insights.innerHTML = 'Terse reduced word count from ' + originalWordCount + ' to ' + summaryWordCount + ', reading time by ' + Math.round((originalWordCount - summaryWordCount)/200, 2) + ' minutes';

@@ -1,9 +1,26 @@
 html, body {
-  width: 600px;
-  height: 400px;
-  overflow-y: scroll;
   overflow-x: hidden;
   margin: 0;
+}
+
+body {
+  overflow-y: scroll;
+  height: 400px;
+  width: 600px;
+}
+
+body.invalid {
+  height: 72px;
+  overflow-y: auto !important;
+  width: 420px;
+}
+
+terse-invalid-page {
+  font-size: 20px;
+  margin: 1em;
+  display: block;
+  font-weight: 300;
+  user-select: none;
 }
 
 #terse-icon {
@@ -45,7 +62,7 @@ html, body {
 	white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  max-width: 400px !important;
+  max-width: 485px !important;
 
   padding-left: 65px !important;
   margin-top: 0px !important;

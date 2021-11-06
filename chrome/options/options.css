@@ -81,3 +81,32 @@ div.card {
   margin: 2em;
   box-shadow: 0px 1px 15px -10px black;
 }
+
+ul {
+  list-style-type: none;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+label > span {
+  font-weight: 100;
+  font-size: 16px;
+  vertical-align: middle;
+  user-select: none;
+}
+
+li > span {
+  display: block;
+  margin-left: 25px;
+  padding: 5px;
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+slider, input {
+  vertical-align: middle;
+}

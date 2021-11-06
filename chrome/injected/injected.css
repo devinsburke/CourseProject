@@ -91,7 +91,7 @@ terse-insight-subtitle {
 	white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    max-width: 400px !important;
+    max-width: 600px !important;
 	padding-left: 40px !important;
 }
 	#terse-icon:hover terse-bg::before {
@@ -135,4 +135,8 @@ terse-insight-subtitle {
     font-weight: 100 !important;
     line-height: 1.2 !important;
 	color: white !important;
+}
+
+#terse-invalid-page {
+	display: none !important;
 }

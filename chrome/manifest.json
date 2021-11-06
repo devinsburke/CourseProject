@@ -19,6 +19,7 @@
       "injected/injected.css"
     ],
     "js": [
+    "terse/constants.js",
 		"terse/language-processing.js",
 		"terse/sentence-document.js",
 		"terse/page-content.js",
