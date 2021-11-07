@@ -137,3 +137,66 @@ div.card > span {
   font-size: 18px;
   vertical-align: middle;
 }
+
+#tests {
+  padding: 10px;
+  padding-top: 0;
+}
+
+.test-heading {
+  background: rgba(0,0,0,0.1);
+  padding: 1em;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 0px;
+}
+  #tests > li:last-of-type > .test-heading {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  .test-heading > span {
+    font-size: 20px;
+  }
+  .test-heading > a {
+    margin-left: 5px;
+  }
+    .test-heading > a > span {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+  .test-heading > span.icon {
+    background-color: rgba(0,0,0,0.2);
+    transition: all .2s ease;
+    border-radius: 100%;
+    transform: rotate(90deg);
+    margin-top: -5px;
+  }
+  .test-heading > span.icon.collapsed {
+    transform: rotate(0deg);
+    transition: all .2s ease;
+  }
+  .test-heading > span.icon:hover {
+    background-color: rgba(0,0,0,0.3);
+    transition: all .2s ease;
+  }
+
+.test-results {
+  float: right;
+  font-size: 20px;
+}
+
+.test-content {
+  background: rgba(100,100,100,0.1);
+  padding: 20px;
+}
+  .test-content.collapsed {
+    height: 0px;
+    padding: 0px;
+  }
+    .test-content.collapsed > table {
+      display: none;
+    }
+
+  .test-content > table {
+    border-collapse: collapse;
+    display: table;
+  }
