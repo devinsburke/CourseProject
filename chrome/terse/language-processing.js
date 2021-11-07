@@ -80,7 +80,7 @@ class TerseNaturalLanguageProcessor {
 
     scoreSimilarityMatrix(matrix, normalize = false) {
         var average = matrix.innerLength / matrix.length;
-        var scores = matrix.map(m => m.reduce((a, b) => a + b * Math.min(m.innerLength / average, 1) || a), 0);
+        var scores = matrix.map(m => m.innerLength < 4 ? 0 : m.reduce((a, b) => a + b * Math.min(m.innerLength / average, 1) || a), 0);
         return normalize ? this.normalizeScoreList(scores) : scores;
     }
 
