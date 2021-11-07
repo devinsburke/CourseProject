@@ -5,17 +5,20 @@ const stopSelectors = {
 	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'footer', 'frame', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'object', 'ol', 'output', 'pre', 'script', 'style', 'sup'],
 	class: ['caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'tool', 'widget', 'wikitable'],
 };
+
 class TerseContentScraper {
 	getContent(element) {
 		var textStopSelector = stopSelectors.tag.join(',');
 		textStopSelector += ',' + stopSelectors.role.map(e => '[role=' + e + ']').join(',');
 		textStopSelector += ',' + stopSelectors.class.map(e => '.' + e).join(',');
 
+		element.innerHTML = element.innerHTML.replace(/[\r\n]+/g, ' ');
+
 		for (var el of element.querySelectorAll(textStopSelector))
 			if (el.parentNode)
 				el.parentNode.removeChild(el);
 
-		for (var el of element.querySelectorAll('li'))
+		for (var el of element.querySelectorAll('li,td'))
 			if (this.getTagConsumption(el, 'a') > 0.4)
 				el.parentNode.removeChild(el);
 
