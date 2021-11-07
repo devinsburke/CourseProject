@@ -90,9 +90,19 @@ function toggleTest(event) {
   }
 }
 
+function formatSentence(sentence) {
+  return sentence.replace('."', '".')
+  .replace('.\'', '\'.')
+  .replace('?"', '"?')
+  .replace('?\'', '\'?')
+  .replace('!"', '"!')
+  .replace('!\'', '\'!');
+}
+
 function performTest(sentences) {
   var processor = new TerseSentencesDocumentProcessor(null, 0.1);
-  processor.documents = sentences;
+  sentences = sentences.map(s => formatSentence(s));
+  processor.processSentencesDocuments(sentences);
   return processor.getTopKDocuments();
 }
 
@@ -170,7 +180,7 @@ function generateTests() {
       cellScore.classList.add('score');
 
       var cellRetrieved = document.createElement('td');
-      if (kDocs.filter(k => k == s.sentence).length > 0) {
+      if (kDocs.filter(k => k.original == formatSentence(s.sentence)).length > 0) {
         cellRetrieved.appendChild(createMaterialIcon('check', null));
       }
       cellRetrieved.classList.add('retrieved'); 
