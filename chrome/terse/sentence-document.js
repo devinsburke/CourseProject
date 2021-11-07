@@ -37,12 +37,15 @@ class TerseSentencesDocumentProcessor {
 			.replace('!"', '"!')
 			.replace('!\'', '\'!');
 		var docs = text.split(this.terminators.sentence).map(s => s && s.trim()).filter(n => n);
-		var lists = docs.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w));
+		return this.processSentencesDocuments(docs);
+	}
+
+	processSentencesDocuments(documents) {
+		var lists = documents.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w));
 		var bags = lists.map(s => this.nlp.toBagOfWords(s, true));
 		var scores = this.nlp.getSimilarityScores(false, ...bags);
-
-		return docs.map((s,i) => new TerseSentenceDocument(s, lists[i], bags[i], scores[i], i));
-	}
+		return documents.map((s, i) => new TerseSentenceDocument(s, lists[i], bags[i], scores[i], i));
+    }
 
 	getTopKValue() {
 		return Math.ceil(this.topPercent * this.documents.length);
