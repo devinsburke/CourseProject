@@ -16,9 +16,9 @@ function createTersePageElement(processor) {
     if (summaryWordCount == 0) {
         var invalidElement = document.createElement('terse-invalid-page');
         if (document.location.pathname == '/')
-            invalidElement.innerHTML = 'Text not summarized on this landing page.';
-        else 
-            invalidElement.innerHTML = 'No text found to summarize on this page.';
+            invalidElement.innerHTML = 'Terse is currently configured to not summarize landing pages. You may adjust this in the extension\'s <i>Options</i>.';
+        else
+            invalidElement.innerHTML = 'There wasn\'t enough content on this page to justify summarizing it.';
         return invalidElement;
     }
 
