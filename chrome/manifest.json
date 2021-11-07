@@ -3,10 +3,6 @@
   "description": "Document summation for Google Chrome",
   "version": "1.0",
   "manifest_version": 3,
-  "web_accessible_resources": [{
-    "resources": ["images/icon48x48.png"],
-    "matches": ["<all_urls>"]
-  }],
   "options_page": "options/options.html",
   "background": {
     "service_worker": "install.js"
