@@ -220,4 +220,11 @@ td {
 }
   td.score, td.retrieved {
     text-align: center;
+    font-size: 18px;
   }
+tr.good {
+  background: #1ac91a59;
+}
+tr.bad {
+  background: #c91a1a59;
+}

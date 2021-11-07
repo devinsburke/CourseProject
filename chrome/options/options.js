@@ -170,8 +170,9 @@ function generateTests() {
       cellScore.classList.add('score');
 
       var cellRetrieved = document.createElement('td');
-      if (kDocs.filter(k => k == s.sentence).length > 0)
-        cellRetrieved.innerHTML = '1'; // TODO:
+      if (kDocs.filter(k => k == s.sentence).length > 0) {
+        cellRetrieved.appendChild(createMaterialIcon('check', null));
+      }
       cellRetrieved.classList.add('retrieved'); 
 
       row.appendChild(cellSentence);
