@@ -23,9 +23,11 @@ class TerseSentencesDocumentProcessor {
 			sentence: new RegExp('(?:[\\!\\?\\r\\n]+[\"\']?)|(?:(?<!\\b(?:' + this.abbreviations.join('|') + '|[a-z]))\\.+(?![\\w\\.\\!\\?])[\"\']?)', 'gi'),
 			word: new RegExp('(?:^\\[.*\\])|(?:[^a-z\\.\\s]+)|(?:(?<!\\b[a-z])\\.)|(?:(?<!\\b[a-z]\\.)\\s)|(?:\\s(?![a-z]\\.))', 'gi'),
 		};
+		if (text == null)
+			return;
 		this.documents = this.splitSentencesAsDocuments(text);
 	}
-	
+
 	splitSentencesAsDocuments(text) {
 		text = text
 			.replace('."', '".')
@@ -38,14 +40,14 @@ class TerseSentencesDocumentProcessor {
 		var lists = docs.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w));
 		var bags = lists.map(s => this.nlp.toBagOfWords(s, true));
 		var scores = this.nlp.getSimilarityScores(false, ...bags);
-		
+
 		return docs.map((s,i) => new TerseSentenceDocument(s, lists[i], bags[i], scores[i], i));
 	}
-	
+
 	getTopKValue() {
 		return Math.ceil(this.topPercent * this.documents.length);
 	}
-	
+
 	getTopKDocuments() {
 		return this.documents
 			.sort((a,b) => b.score-a.score)
