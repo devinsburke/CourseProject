@@ -90,6 +90,12 @@ function toggleTest(event) {
   }
 }
 
+function performTest(sentences) {
+  var processor = new TerseSentencesDocumentProcessor(null, 0.1);
+  processor.documents = sentences;
+  return processor.getTopKDocuments();
+}
+
 async function generateOptions() {
   var container = document.getElementById('options');
   terseSettings.forEach(async s => {
@@ -110,6 +116,9 @@ function generateAbout() {
 function generateTests() {
   var container = document.getElementById('tests');
   terseTests.forEach(t => {
+    var kDocs = performTest(t.sentences.map(s => s.sentence));
+    console.log(kDocs);
+
     var elem = document.createElement('li');
     var header = document.createElement('div');
     header.classList.add('test-heading');
@@ -161,7 +170,8 @@ function generateTests() {
       cellScore.classList.add('score');
 
       var cellRetrieved = document.createElement('td');
-      cellRetrieved.innerHTML = ''; // TODO:
+      if (kDocs.filter(k => k == s.sentence).length > 0)
+        cellRetrieved.innerHTML = '1'; // TODO:
       cellRetrieved.classList.add('retrieved'); 
 
       row.appendChild(cellSentence);
