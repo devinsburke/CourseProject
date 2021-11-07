@@ -44,7 +44,8 @@ class TerseSentencesDocumentProcessor {
 		var lists = documents.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w));
 		var bags = lists.map(s => this.nlp.toBagOfWords(s, true));
 		var scores = this.nlp.getSimilarityScores(false, ...bags);
-		return documents.map((s, i) => new TerseSentenceDocument(s, lists[i], bags[i], scores[i], i));
+		this.documents = documents.map((s, i) => new TerseSentenceDocument(s, lists[i], bags[i], scores[i], i));
+		return this.documents;
     }
 
 	getTopKValue() {
