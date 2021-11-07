@@ -158,9 +158,11 @@ function generateTests() {
 
       var cellScore = document.createElement('td');
       cellScore.innerHTML = s.score;
+      cellScore.classList.add('score');
 
       var cellRetrieved = document.createElement('td');
-      cellRetrieved.innerHTML = ''; // TODO: 
+      cellRetrieved.innerHTML = ''; // TODO:
+      cellRetrieved.classList.add('retrieved'); 
 
       row.appendChild(cellSentence);
       row.appendChild(cellScore);
