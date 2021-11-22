@@ -23,9 +23,8 @@ class TerseSentencesDocumentProcessor {
 			sentence: new RegExp('(?:[\\!\\?\\r\\n]+[\"\']?)|(?:(?<!\\b(?:' + this.abbreviations.join('|') + '|[a-z]))\\.+(?![\\w\\.\\!\\?])[\"\']?)', 'gi'),
 			word: new RegExp('(?:^\\[.*\\])|(?:[^a-z\\.\\s]+)|(?:(?<!\\b[a-z])\\.)|(?:(?<!\\b[a-z]\\.)\\s)|(?:\\s(?![a-z]\\.))', 'gi'),
 		};
-		if (text == null)
-			return;
-		this.documents = this.splitSentencesAsDocuments(text);
+		if (text)
+			this.documents = this.splitSentencesAsDocuments(text);
 	}
 
 	splitSentencesAsDocuments(text) {

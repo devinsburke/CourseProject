@@ -15,12 +15,11 @@
       "injected/injected.css"
     ],
     "js": [
-    "terse/tests.js",
-    "terse/constants.js",
-		"terse/language-processing.js",
-		"terse/sentence-document.js",
-		"terse/page-content.js",
-    "terse/processor.js",
+		"js/tests.js",
+		"js/language-processing.js",
+		"js/sentence-document.js",
+		"js/page-content.js",
+		"js/processor.js",
 		"injected/injected.js"
 	]
   }],

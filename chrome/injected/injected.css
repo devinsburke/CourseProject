@@ -144,6 +144,6 @@ terse-ul > terse-li {
     margin-left: 46px !important;
 }
 
-#terse-invalid-page {
+terse-invalid-page {
 	display: none !important;
 }
