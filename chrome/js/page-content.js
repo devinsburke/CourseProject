@@ -1,8 +1,10 @@
 const rGoodContent = /article|body|content|entry|hentry|main|page|post|text|blog|story|column/i;
 const rBadContent = /combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
+const blockElements = ['ADDRESS', 'ARTICLE', 'ASIDE', 'BLOCKQUOTE', 'CANVAS', 'DD', 'DIV', 'FIELDSET', 'FIGCAPTION', 'FIGURE', 'FOOTER', 'FORM', 'HR', 'LI', 'MAIN', 'NAV', 'NOSCRIPT', 'OL', 'P', 'PRE', 'SECTION', 'TABLE', 'TD', 'TH', 'TR', 'THEAD', 'TFOOT', 'UL', 'VIDEO'];
 const stopSelectors = {
 	role: ['alert', 'alertdialog', 'banner', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
-	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'footer', 'frame', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'object', 'ol', 'output', 'pre', 'script', 'style', 'sup'],
+	tag: ['address', 'cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'figcaption', 'footer', 'frame', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'nav', 'noscript', 'object', 'ol', 'output', 'pre', 'script', 'style', 'sup', 'tfoot'],
+	content: ['address', 'canvas', 'img', 'figure', 'form', 'video'],
 	class: ['caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'thumb', 'tool', 'widget', 'wikitable'],
 };
 
@@ -19,12 +21,16 @@ class TerseContentScraper {
 		element.innerHTML = element.innerHTML.replace(/[\r\n]+/g, ' ');
 
 		for (var el of element.querySelectorAll(textStopSelector))
-			if (el.parentNode)
+			if (el.parentNode) {
+				this.padIfBlockElement(el);
 				el.parentNode.removeChild(el);
+			}
 
 		for (var el of element.querySelectorAll('li,td'))
-			if (this.getTagConsumption(el, 'a') > 0.4)
+			if (this.getTagConsumption(el, 'a') > 0.4) {
+				this.padIfBlockElement(el);
 				el.parentNode.removeChild(el);
+			}
 
         var allElements = element.querySelectorAll('p,td,pre,span,div');
 		var nodes = [];
@@ -45,20 +51,23 @@ class TerseContentScraper {
 				}
 			});
 
-            var contentScore = 1;
-            contentScore += innerText.split(',').length;
-            contentScore += Math.min(Math.floor(innerText.length/100), 3);
-            contentScore += 1 - this.getTagConsumption(node, 'a');
-			node.parentNode.contentScore += contentScore;
+            var score = 1;
+            score += innerText.split(',').length;
+            score += Math.min(Math.floor(innerText.length/100), 3);
+            score += 1 - this.getTagConsumption(node, 'a');
+			node.parentNode.score += score;
             if (grandParentNode)
-                grandParentNode.contentScore += contentScore/2;
+                grandParentNode.score += score/2;
         }
 
-		var selection = nodes.sort((a,b) => b.contentScore-a.contentScore)[0];
+		var selection = nodes.sort((a,b) => b.score-a.score)[0];
 		if (!selection)
 			return '';
 
-		this.removeCaptions(selection, 'form','table','ul','div');
+		this.removeCaptions(selection, 'form', 'table', 'ul', 'div');
+		for (var e of selection.querySelectorAll('*'))
+			this.padIfBlockElement(e);
+
         return selection.innerText;
     }
 
@@ -94,7 +103,7 @@ class TerseContentScraper {
         for (var i=nodes.length-1; i >= 0; i-=1) {
 			var item = nodes[i];
 			var text = this.getText(item);
-			if (item.contentScore && item.contentScore < 0) {
+			if (item.score && item.score < 0) {
                 item.parentNode.removeChild(item);
 			}
 			else if (text.split(',').length-1 < 10) {
@@ -104,7 +113,7 @@ class TerseContentScraper {
                 var input  = item.getElementsByTagName("input").length;
 				var embed  = item.getElementsByTagName("embed").length;
 
-                if (img > p || li > p && !['ul','ol'].includes(item.tagName)) {
+                if (img > p || li > p && !['UL','OL'].includes(item.tagName)) {
                     item.parentNode.removeChild(item);
                 } else if(input > Math.floor(p/3) ) {
                     item.parentNode.removeChild(item);
@@ -113,6 +122,16 @@ class TerseContentScraper {
                 } else if(embed == 1 && text.length < 75 || embed > 1) {
                     item.parentNode.removeChild(item);
                 }
+            }
+        }
+	}
+
+	padIfBlockElement(element) {
+		if (['block', 'absolute'].includes(element.style.display) || !element.style.display && blockElements.includes(element.tagName)) {
+			if (element.parentNode) {
+				element.parentNode.insertBefore(document.createTextNode('\n'), element);
+			} else {
+				element.prepend(document.createTextNode('\n'));
             }
         }
     }
