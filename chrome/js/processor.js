@@ -48,6 +48,14 @@ function createTersePageElement(processor) {
 		insights.innerHTML = 'Terse reduced word count from ' + originalWordCount + ' to ' + summaryWordCount + ', reading time by ' + Math.round((originalWordCount - summaryWordCount) / 200, 2) + ' minutes';
 		this.tersePageElement.appendChild(insights);
 
+		var ul = document.createElement('terse-topic-ul');
+		map.entities(processor.topics).forEach(([topic, _]) => {
+			var li = document.createElement('terse-topic-li');
+			li.appendChild(document.createTextNode(topic));
+			ul.appendChild(li);
+		});
+		this.tersePageElement.appendChild(ul);
+
 		var ul = document.createElement('terse-ul');
 		topDocs.forEach(doc => {
 			var li = document.createElement('terse-li');

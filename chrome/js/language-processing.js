@@ -13,6 +13,33 @@ class TerseNaturalLanguageProcessor {
         return countByWord;
     }
 
+    toTopics(wordLists, contextLength = 4, removeStopwords = true) {
+        var topics = new Map();
+        wordLists.forEach(list => {
+            if (removeStopwords)
+                list = this.removeStopwords(list);
+            var context = [];
+            list.forEach(w => {
+                if (context.length == contextLength)
+                    context.shift();
+                context.push(w);
+                for (var i = 0, l = context.length; i < l - 1; i++) {
+                    var asArray = context.slice(i, l);
+                    var str = asArray.join(' ');
+                    var value = topics.get(str) ?? { asArray: asArray, count: 0 };
+                    value.count += 1 + 0.1 * (l - i);
+                    topics.set(str, value);
+                }
+            });
+        });
+        topics = [...topics.entries()].filter(t => t[1].count > 3);
+        topics = topics
+            .filter(([_, t]) => topics.every(([__, t2]) => t2.count <= t.count || t2.asArray.length < t.asArray.length || !t.asArray.every(w => t2.asArray.includes(w))))
+            .sort((a, b) => b[0].length - a[0].length)
+            .sort((a, b) => b[1].count - a[1].count);
+        return new Map(topics);
+    }
+
     removeStopwords(listOfWords) {
         return listOfWords.filter(w => !this.stopwords.includes(w.toLowerCase()));
     }

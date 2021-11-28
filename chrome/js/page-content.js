@@ -7,6 +7,10 @@ const stopSelectors = {
 };
 
 class TerseContentScraper {
+	getDescription(document) {
+		var metas = document.querySelectorAll('meta[description]');
+    }
+
 	getContent(element) {
 		var textStopSelector = stopSelectors.tag.join(',');
 		textStopSelector += ',' + stopSelectors.role.map(e => '[role=' + e + ']').join(',');

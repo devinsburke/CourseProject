@@ -17,6 +17,7 @@ class TerseSentencesDocumentProcessor {
 		this.stopwords = stopwords;
 		this.abbreviations = abbreviations;
 		this.documents = [];
+		this.topics = [];
 		this.topPercent = topPercent;
 		this.nlp = new TerseNaturalLanguageProcessor(this.stopwords);
 		this.terminators = {
@@ -42,6 +43,9 @@ class TerseSentencesDocumentProcessor {
 	processSentencesDocuments(documents) {
 		var lists = documents.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w));
 		var bags = lists.map(s => this.nlp.toBagOfWords(s, true));
+
+		this.topics = this.nlp.toTopics(lists, 4, true);
+
 		var scores = this.nlp.getSimilarityScores(false, ...bags);
 		this.documents = documents.map((s, i) => new TerseSentenceDocument(s, lists[i], bags[i], scores[i], i));
 		return this.documents;
