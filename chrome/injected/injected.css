@@ -35,7 +35,14 @@ terse, terse * {
 	font-weight: bold !important;
 	margin: 0 !important;
 	padding: 0 !important;
-
+	opacity: 0 !important;
+}
+#terse-icon terse-h2 {
+	display: none !important;
+	border: 0 !important;
+	font-weight: bold !important;
+	margin: 0 !important;
+	padding: 0 !important;
 	opacity: 0 !important;
 }
 
@@ -46,6 +53,19 @@ terse, terse * {
     font-weight: 600 !important;
     font-size: 42px !important;
 }
+#terse-icon terse-topic-ul {
+	display: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+	#terse-icon terse-topic-ul terse-li {
+		background: #eee !important;
+		display: inline-block !important;
+		font-size: 0.8em;
+		list-style-type: none !important;
+		margin: 0.25em !important;
+		padding: 0.5em !important;
+	}
 #terse-icon terse-ul {
 	display: none !important;
 	margin: 1em !important;
@@ -75,27 +95,31 @@ terse-insight-subtitle {
     padding: 2.5em !important;
 	min-width: 450px !important;
 }
-
-#terse-icon:hover terse-span {
-	display: none !important;
-}
-
-#terse-icon:hover terse-h1 {
-	display: block !important;
-	z-index: 999 !important;
-
-	opacity: 1 !important;
-	transition: all 2s ease !important;
-    position: absolute !important;
-    font-size: 42px !important;
-    font-weight: 100 !important;
-	margin-top: -10px !important;
-	white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    max-width: 600px !important;
-	padding-left: 40px !important;
-}
+	#terse-icon:hover terse-span {
+		display: none !important;
+	}
+	#terse-icon:hover terse-h1 {
+		display: block !important;
+		z-index: 999 !important;
+		opacity: 1 !important;
+		transition: all 2s ease !important;
+		position: absolute !important;
+		font-size: 42px !important;
+		font-weight: 100 !important;
+		margin-top: -10px !important;
+		white-space: nowrap !important;
+		overflow: hidden !important;
+		text-overflow: ellipsis !important;
+		max-width: 600px !important;
+		padding-left: 40px !important;
+	}
+	#terse-icon:hover terse-h2 {
+		display: block !important;
+		font-size: 1em !important;
+		margin: 1em 0 0.5em 0 !important;
+		opacity: 1 !important;
+		transition: all 2s ease !important;
+	}
 	#terse-icon:hover terse-bg::before {
 		display: block !important;
 		width: 150px !important;
@@ -120,10 +144,12 @@ terse-insight-subtitle {
 		font-weight: 600 !important;
 	}
 
+#terse-icon:hover terse-topic-ul {
+	display: block !important;
+}
 #terse-icon:hover terse-ul {
 	display: block !important;
 	list-style-type: disc !important;
-	margin-top: 30px !important;
 }
 
 terse-ul > terse-li {

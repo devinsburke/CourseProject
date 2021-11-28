@@ -61,4 +61,14 @@ class TerseSentencesDocumentProcessor {
 			.slice(0, this.getTopKValue())
 			.sort((a,b) => a.sortOrder-b.sortOrder);
 	}
+
+	getTopLValue() {
+		return Math.ceil(this.topPercent * Math.min(this.topics.size, this.getTopKValue()))
+    }
+
+	getTopLTopics() {
+		return [...this.topics.entries()]
+			.sort((a, b) => b[1].count - a[1].count)
+			.slice(0, this.getTopLValue());
+    }
 }

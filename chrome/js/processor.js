@@ -14,6 +14,8 @@ function getSummaryEntries() {
 function createTersePageElement(processor) {
 	if (!this.tersePageElement) {
 		var topDocs = processor.getTopKDocuments();
+		var topTopics = processor.getTopLTopics();
+
 		var originalWordCount = processor.documents.reduce((a, b) => a + b.words.length, 0);
 		var summaryWordCount = topDocs.reduce((a, b) => a + b.words.length, 0);
 		if (summaryWordCount == 0) {
@@ -48,21 +50,27 @@ function createTersePageElement(processor) {
 		insights.innerHTML = 'Terse reduced word count from ' + originalWordCount + ' to ' + summaryWordCount + ', reading time by ' + Math.round((originalWordCount - summaryWordCount) / 200, 2) + ' minutes';
 		this.tersePageElement.appendChild(insights);
 
-		var ul = document.createElement('terse-topic-ul');
-		map.entities(processor.topics).forEach(([topic, _]) => {
-			var li = document.createElement('terse-topic-li');
+		var topicTitle = document.createElement('terse-h2');
+		topicTitle.innerHTML = 'Key Phrases / Topics';
+		this.tersePageElement.appendChild(topicTitle);
+		var topicUl = document.createElement('terse-topic-ul');
+		for (const [topic, _] of topTopics) {
+			var li = document.createElement('terse-li');
 			li.appendChild(document.createTextNode(topic));
-			ul.appendChild(li);
-		});
-		this.tersePageElement.appendChild(ul);
+			topicUl.appendChild(li);
+		}
+		this.tersePageElement.appendChild(topicUl);
 
-		var ul = document.createElement('terse-ul');
+		var sentenceTitle = document.createElement('terse-h2');
+		sentenceTitle.innerHTML = 'Key Sentences';
+		this.tersePageElement.appendChild(sentenceTitle);
+		var sentenceUl = document.createElement('terse-ul');
 		topDocs.forEach(doc => {
 			var li = document.createElement('terse-li');
 			li.appendChild(document.createTextNode(doc.original));
-			ul.appendChild(li);
+			sentenceUl.appendChild(li);
 		});
-		this.tersePageElement.appendChild(ul);
+		this.tersePageElement.appendChild(sentenceUl);
 	}
 	return this.tersePageElement;
 }
