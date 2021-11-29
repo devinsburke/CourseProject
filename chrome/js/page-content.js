@@ -1,10 +1,10 @@
 const rGoodContent = /article|body|content|entry|hentry|main|page|post|text|blog|story|column/i;
-const rBadContent = /combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
+const rBadContent = /attribution|combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
 const blockElements = ['ADDRESS', 'ARTICLE', 'ASIDE', 'BLOCKQUOTE', 'CANVAS', 'DD', 'DIV', 'FIELDSET', 'FIGCAPTION', 'FIGURE', 'FOOTER', 'FORM', 'HR', 'LI', 'MAIN', 'NAV', 'NOSCRIPT', 'OL', 'P', 'PRE', 'SECTION', 'TABLE', 'TD', 'TH', 'TR', 'THEAD', 'TFOOT', 'UL', 'VIDEO'];
 const stopSelectors = {
 	role: ['alert', 'alertdialog', 'banner', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
 	tag: ['address', 'cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'figcaption', 'footer', 'frame', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'nav', 'noscript', 'object', 'ol', 'output', 'pre', 'script', 'style', 'sup', 'tfoot'],
-	content: ['address', 'canvas', 'img', 'figure', 'form', 'video'],
+	content: ['address', 'canvas', 'img', 'embed', 'figure', 'form', 'svg', 'video'],
 	class: ['caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'thumb', 'tool', 'widget', 'wikitable'],
 };
 
@@ -13,24 +13,20 @@ class TerseContentScraper {
 		var metas = document.querySelectorAll('meta[description]');
     }
 
-	getContent(element) {
+	getContent(body) {
 		var textStopSelector = stopSelectors.tag.join(',');
-		textStopSelector += ',' + stopSelectors.role.map(e => '[role=' + e + ']').join(',');
-		textStopSelector += ',' + stopSelectors.class.map(e => '.' + e).join(',');
+		textStopSelector += ',[role=' + stopSelectors.role.join('],[role=') + ']';
+		textStopSelector += ',.' + stopSelectors.class.join(',.');
 
-		element.innerHTML = element.innerHTML.replace(/[\r\n]+/g, ' ');
+		var element = document.createElement('body');
+		element.innerHTML = body.innerHTML.replace(/[\r\n]+/g, ' ');
 
 		for (var el of element.querySelectorAll(textStopSelector))
-			if (el.parentNode) {
-				this.padIfBlockElement(el);
-				el.parentNode.removeChild(el);
-			}
+			this.destroyElement(el);
 
 		for (var el of element.querySelectorAll('li,td'))
-			if (this.getTagConsumption(el, 'a') > 0.4) {
-				this.padIfBlockElement(el);
-				el.parentNode.removeChild(el);
-			}
+			if (this.getTagConsumption(el, 'a') > 0.4)
+				this.destroyElement(el);
 
         var allElements = element.querySelectorAll('p,td,pre,span,div');
 		var nodes = [];
@@ -43,7 +39,6 @@ class TerseContentScraper {
 			if (str.search(rBadContent) != -1 && str.search(rGoodContent) == -1)
 				continue;
 
-			var grandParentNode = node.parentNode.parentNode;
 			[node.parentNode, node.parentNode.parentNode].forEach(n => {
 				if (n && n.score == null) {
 					this.scoreElement(n);
@@ -53,14 +48,14 @@ class TerseContentScraper {
 
             var score = 1;
             score += innerText.split(',').length;
-            score += Math.min(Math.floor(innerText.length/100), 3);
+			score += Math.min(Math.floor(innerText.length / 100), 3);
             score += 1 - this.getTagConsumption(node, 'a');
 			node.parentNode.score += score;
-            if (grandParentNode)
-                grandParentNode.score += score/2;
+			if (node.parentNode.parentNode)
+				node.parentNode.parentNode.score += score / 2;
         }
 
-		var selection = nodes.sort((a,b) => b.score-a.score)[0];
+		var selection = nodes.sort((a, b) => b.score - a.score)[0];
 		if (!selection)
 			return '';
 
@@ -104,7 +99,7 @@ class TerseContentScraper {
 			var item = nodes[i];
 			var text = this.getText(item);
 			if (item.score && item.score < 0) {
-                item.parentNode.removeChild(item);
+				this.destroyElement(item);
 			}
 			else if (text.split(',').length-1 < 10) {
                 var p      = item.getElementsByTagName("p").length;
@@ -113,26 +108,35 @@ class TerseContentScraper {
                 var input  = item.getElementsByTagName("input").length;
 				var embed  = item.getElementsByTagName("embed").length;
 
-                if (img > p || li > p && !['UL','OL'].includes(item.tagName)) {
-                    item.parentNode.removeChild(item);
-                } else if(input > Math.floor(p/3) ) {
-                    item.parentNode.removeChild(item);
-                } else if(text.length < 25 && (img === 0 || img > 2)) {
-                    item.parentNode.removeChild(item);
-                } else if(embed == 1 && text.length < 75 || embed > 1) {
-                    item.parentNode.removeChild(item);
-                }
+				if (img > p || li > p && !['UL', 'OL'].includes(item.tagName)) {
+					this.destroyElement(item);
+				} else if (input > Math.floor(p / 3)) {
+					this.destroyElement(item);
+				} else if (text.length < 75 && img+embed > 0) {
+					this.destroyElement(item);
+				}
             }
         }
 	}
 
-	padIfBlockElement(element) {
-		if (['block', 'absolute'].includes(element.style.display) || !element.style.display && blockElements.includes(element.tagName)) {
-			if (element.parentNode) {
-				element.parentNode.insertBefore(document.createTextNode('\n'), element);
-			} else {
-				element.prepend(document.createTextNode('\n'));
-            }
-        }
+	isBlockElement(e) {
+		return (['block', 'absolute'].includes(e.style.display) || !e.style.display && blockElements.includes(e.tagName));
+    }
+
+	padIfBlockElement(e) {
+		if (e.parentNode && this.isBlockElement(e)) {
+			e.parentNode.insertBefore(document.createTextNode('\n'), e);
+			e.parentNode.insertBefore(document.createTextNode('\n'), e.nextSibling);
+		}
+	}
+
+	destroyElement(e) {
+		if (e && e.parentNode) {
+			this.padIfBlockElement(e);
+			var newContainer = document.createElement('div');
+			e.parentNode.removeChild(e);
+			newContainer.appendChild(e);
+			newContainer.innerHTML = '';
+		}
     }
 }

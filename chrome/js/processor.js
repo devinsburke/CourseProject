@@ -1,7 +1,7 @@
 function getSummaryEntries() {
 	if (!this.summaryEntries) {
 		var scraper = new TerseContentScraper();
-		var text = scraper.getContent(document.body.cloneNode(true));
+		var text = scraper.getContent(document.body);
 		if (text.length < 250)
 			return new TerseSentencesDocumentProcessor('', 0);
 		this.summaryEntries = new TerseSentencesDocumentProcessor(text, 0.1);
