@@ -21,13 +21,13 @@ terse, terse * {
     bottom: 1em !important;
     right: 1em !important;
 }
-#terse-icon * {
-	color: #333 !important;
-	font: initial !important;
-	font-size: 1em !important;
-	line-height: initial !important;
-	font-family: 'Noto Sans', sans-serif !important;
-}
+	#terse-icon * {
+		color: #333 !important;
+		font: initial !important;
+		font-size: 1em !important;
+		line-height: initial !important;
+		font-family: 'Noto Sans', sans-serif !important;
+	}
 
 #terse-icon terse-h1 {
 	display: none !important;
@@ -60,11 +60,15 @@ terse, terse * {
 }
 	#terse-icon terse-topic-ul terse-li {
 		background: #eee !important;
+		border-radius: 5px !important;
+		color: #555 !important;
 		display: inline-block !important;
-		font-size: 0.8em;
+		font-size: 0.65em !important;
+		font-weight: bold !important;
 		list-style-type: none !important;
 		margin: 0.25em !important;
-		padding: 0.5em !important;
+		padding: 0.55em 0.75em !important;
+		text-transform: uppercase !important;
 	}
 #terse-icon terse-ul {
 	display: none !important;

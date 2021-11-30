@@ -1,10 +1,10 @@
 const rGoodContent = /article|body|content|entry|hentry|main|page|post|text|blog|story|column/i;
 const rBadContent = /attribution|combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
-const blockElements = ['ADDRESS', 'ARTICLE', 'ASIDE', 'BLOCKQUOTE', 'CANVAS', 'DD', 'DIV', 'FIELDSET', 'FIGCAPTION', 'FIGURE', 'FOOTER', 'FORM', 'HR', 'LI', 'MAIN', 'NAV', 'NOSCRIPT', 'OL', 'P', 'PRE', 'SECTION', 'TABLE', 'TD', 'TH', 'TR', 'THEAD', 'TFOOT', 'UL', 'VIDEO'];
+const blockElements = ['ADDRESS', 'ARTICLE', 'ASIDE', 'BLOCKQUOTE', 'BR', 'CANVAS', 'DD', 'DIV', 'FIELDSET', 'FIGCAPTION', 'FIGURE', 'FOOTER', 'FORM', 'HR', 'LI', 'MAIN', 'NAV', 'NOSCRIPT', 'OL', 'P', 'PRE', 'SECTION', 'TABLE', 'TD', 'TH', 'TR', 'THEAD', 'TFOOT', 'UL', 'VIDEO'];
 const stopSelectors = {
 	role: ['alert', 'alertdialog', 'banner', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
-	tag: ['address', 'cite', 'code', 'dialog', 'dl', 'dt', 'embed', 'figcaption', 'footer', 'frame', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'iframe', 'label', 'link', 'menu', 'menuitem', 'meta', 'nav', 'noscript', 'object', 'ol', 'output', 'pre', 'script', 'style', 'sup', 'tfoot'],
-	content: ['address', 'canvas', 'img', 'embed', 'figure', 'form', 'svg', 'video'],
+	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'figcaption', 'footer', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'label', 'link', 'menu', 'menuitem', 'meta', 'nav', 'noscript', 'ol', 'output', 'pre', 'script', 'style', 'sup', 'tfoot'],
+	visual: ['address', 'canvas', 'embed', 'figure', 'form', 'frame', 'iframe', 'img', 'object', 'svg', 'video'],
 	class: ['caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'thumb', 'tool', 'widget', 'wikitable'],
 };
 
@@ -15,6 +15,7 @@ class TerseContentScraper {
 
 	getContent(body) {
 		var textStopSelector = stopSelectors.tag.join(',');
+		textStopSelector += ',.' + stopSelectors.visual.join(',');
 		textStopSelector += ',[role=' + stopSelectors.role.join('],[role=') + ']';
 		textStopSelector += ',.' + stopSelectors.class.join(',.');
 
