@@ -11,17 +11,16 @@
     "matches": ["<all_urls>"],
 	"run_at": "document_idle",
     "css": [
-      "style.css",
-      "injected/injected.css"
+      "style.css"
     ],
     "js": [
-		"js/tests.js",
-		"js/language-processing.js",
-		"js/sentence-document.js",
-		"js/page-content.js",
-		"js/processor.js",
-		"injected/injected.js"
-	]
+      "js/tests.js",
+      "js/language-processing.js",
+      "js/sentence-document.js",
+      "js/page-content.js",
+      "js/processor.js",
+      "injected/injected.js"
+    ]
   }],
   "permissions": ["storage", "activeTab", "scripting"],
   "action": {
