@@ -47,15 +47,16 @@ function createTersePageElement(processor) {
 		this.tersePageElement.appendChild(title);
 
 		var insights = document.createElement('terse-insight-subtitle');
-		insights.innerHTML = 'Terse reduced word count from ' + originalWordCount + ' to ' + summaryWordCount + ', reading time by ' + Math.round((originalWordCount - summaryWordCount) / 200, 2) + ' minutes';
+		insights.innerHTML = 'Reduced wordcount from ' + originalWordCount + ' to ' + summaryWordCount + ', reading time by ' + Math.round((originalWordCount - summaryWordCount) / 200, 2) + ' minutes';
 		this.tersePageElement.appendChild(insights);
 
 		var topicTitle = document.createElement('terse-h2');
 		topicTitle.innerHTML = 'Key Phrases / Topics';
 		this.tersePageElement.appendChild(topicTitle);
 		var topicUl = document.createElement('terse-topic-ul');
-		for (const [topic, _] of topTopics) {
+		for (const [topic, topicObj] of topTopics) {
 			var li = document.createElement('terse-li');
+			li.setAttribute('data-count', topicObj.count);
 			li.appendChild(document.createTextNode(topic));
 			topicUl.appendChild(li);
 		}

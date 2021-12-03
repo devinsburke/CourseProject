@@ -1,8 +1,8 @@
 function callback(obj) {
     document.body.innerHTML = obj.element;
+    document.body.classList.add('terse-popup');
     if (obj.element.split('>')[0].split('<')[1] == 'terse-invalid-page') {
         document.body.classList.add('invalid');
-        document.classList.add('invalid');
     }
     else
         document.getElementsByTagName('terse-bg')[0].setAttribute('data-display', 'Σ');

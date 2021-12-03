@@ -26,17 +26,18 @@ class TerseNaturalLanguageProcessor {
                 for (var i = 0, l = context.length; i < l - 1; i++) {
                     var asArray = context.slice(i, l);
                     var str = asArray.join(' ');
-                    var value = topics.get(str) ?? { asArray: asArray, count: 0 };
-                    value.count += 1 + 0.1 * (l - i);
+                    var value = topics.get(str) ?? { asArray: asArray, score: 0, count: 0, };
+                    value.count += 1;
+                    value.score += 1 + 0.1 * (l - i);
                     topics.set(str, value);
                 }
             });
         });
-        topics = [...topics.entries()].filter(t => t[1].count > 3);
+        topics = [...topics.entries()].filter(t => t[1].score > 3);
         topics = topics
-            .filter(([_, t]) => topics.every(([__, t2]) => t2.count <= t.count || t2.asArray.length < t.asArray.length || !t.asArray.every(w => t2.asArray.includes(w))))
+            .filter(([_, t]) => topics.every(([__, t2]) => t2.score <= t.score || t2.asArray.length < t.asArray.length || !t.asArray.every(w => t2.asArray.includes(w))))
             .sort((a, b) => b[0].length - a[0].length)
-            .sort((a, b) => b[1].count - a[1].count);
+            .sort((a, b) => b[1].score - a[1].score);
         return new Map(topics);
     }
 
@@ -62,6 +63,7 @@ class TerseNaturalLanguageProcessor {
             var currentBag = bagOfWords[i];
             matrix.innerLength += currentBag.innerLength;
             matrix[i].innerLength = currentBag.innerLength;
+
             for (var j = i + 1; j < length; j++) {
                 var similarity = this.getSimilarity(currentBag, bagOfWords[j]);
                 matrix[i][j] = similarity;
@@ -80,9 +82,12 @@ class TerseNaturalLanguageProcessor {
     }
 
     getSimilarity(bagOfWords1, bagOfWords2) {
+        if (bagOfWords1.size == 0 || bagOfWords2.size == 0)
+            return 0;
+
         var vocab = this.toVocabulary(
-            Object.keys(bagOfWords1),
-            Object.keys(bagOfWords2)
+            [...bagOfWords1.keys()],
+            [...bagOfWords2.keys()]
         );
         return this.cosineSimilarity(
             this.normalizeWordsToVocab(vocab, bagOfWords1),
@@ -91,7 +96,7 @@ class TerseNaturalLanguageProcessor {
     }
 
     normalizeWordsToVocab(vocab, bagOfWords) {
-        return vocab.map(v => bagOfWords[v] || 0);
+        return vocab.map(v => bagOfWords.get(v) || 0);
     }
 
     cosineSimilarity(vector1, vector2) {
