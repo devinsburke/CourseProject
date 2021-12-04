@@ -1,4 +1,4 @@
-const defaultStopwords = ['i','me','my','myself','we','our','ours','ourselves','you','you\'re','you\'ve','you\'ll','you\'d','your','yours','yourself','yourselves','he','him','his','himself','she','she\'s','her','hers','herself','it','it\'s','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','that\'ll','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','don\'t','should','should\'ve','now','d','ll','m','o','re','ve','y','ain','aren','aren\'t','couldn','couldn\'t','didn','didn\'t','doesn','doesn\'t','hadn','hadn\'t','hasn','hasn\'t','haven','haven\'t','isn','isn\'t','ma','mightn','mightn\'t','mustn','mustn\'t','needn','needn\'t','shan','shan\'t','shouldn','shouldn\'t','wasn','wasn\'t','weren','weren\'t','won','won\'t','wouldn','wouldn\'t','www','com'];
+const defaultStopwords = ['i','me','my','myself','we','our','ours','ourselves','you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','that\'ll','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','th','nd','can','will','just','don','should','now','d','ll','m','o','re','ve','y','ain','aren','couldn','didn','doesn','hadn','hasn','haven','isn','ma','mightn','mustn','needn','shan','shouldn','wasn','weren','won','wouldn','www','com','also'];
 const defaultAbbreviations = ['abr','apr','aug','ave','cir','ct','dec','dr','ed','etc','et al','feb','gen','inc','jan','jr','jul','jun','ln','mar','mr','mrs','nov','oct','pp','prof','rep','rd','rev','sen','sep','sr','st','vol','vs'];
 
 class TerseSentenceDocument {
@@ -25,7 +25,7 @@ class TerseSentencesDocumentProcessor {
 			word: new RegExp('(?:^\\[.*\\])|(?:[^a-z\\.\\s]+)|(?:(?<!\\b[a-z])\\.)|(?:(?<!\\b[a-z]\\.)\\s)|(?:\\s(?![a-z]\\.))', 'gi'),
 		};
 		if (text)
-			this.documents = this.splitSentencesAsDocuments(text);
+			this.splitSentencesAsDocuments(text);
 	}
 
 	splitSentencesAsDocuments(text) {
@@ -37,7 +37,7 @@ class TerseSentencesDocumentProcessor {
 			.replace('!"', '"!')
 			.replace('!\'', '\'!');
 		var docs = text.split(this.terminators.sentence).map(s => s && s.trim()).filter(n => n);
-		return this.processSentencesDocuments(docs);
+		this.processSentencesDocuments(docs);
 	}
 
 	processSentencesDocuments(documents) {
@@ -48,7 +48,6 @@ class TerseSentencesDocumentProcessor {
 
 		var scores = this.nlp.getSimilarityScores(false, ...bags);
 		this.documents = documents.map((s, i) => new TerseSentenceDocument(s, lists[i], bags[i], scores[i], i));
-		return this.documents;
     }
 
 	getTopKValue() {
@@ -57,18 +56,19 @@ class TerseSentencesDocumentProcessor {
 
 	getTopKDocuments() {
 		return this.documents
+			.filter(d => d.score > 0)
 			.sort((a,b) => b.score-a.score)
 			.slice(0, this.getTopKValue())
 			.sort((a,b) => a.sortOrder-b.sortOrder);
 	}
 
-	getTopLValue() {
-		return Math.ceil(this.topPercent * Math.min(this.topics.size, this.getTopKValue()))
-    }
-
-	getTopLTopics() {
-		return [...this.topics.entries()]
+	getTopKTopics() {
+		var k = this.getTopKValue();
+		var topic2K = Math.ceil(2 * this.topPercent * this.topics.size);
+		var topics = [...this.topics.entries()];
+		var mainTopicCount = topics.filter(t => t.count > k).length;
+		return topics
 			.sort((a, b) => b[1].score - a[1].score)
-			.slice(0, this.getTopLValue());
+			.slice(0, Math.max(mainTopicCount, Math.min(topic2K, k)));
     }
 }

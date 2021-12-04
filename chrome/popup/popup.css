@@ -1,16 +1,11 @@
 html, body {
-    font: initial !important;
-    min-width: 450px !important;
-    margin: 0 !important;
-    width: calc(50% - 3em) !important;
+    font: initial;
+    font-size: 16px;
+    min-width: 550px;
+    margin: 0;
 }
 
 body {
     overflow: scroll;
-    padding: 2.5em !important;
+    padding: 2.5em;
 }
-
-    body.invalid {
-        overflow-y: auto !important;
-        width: 420px;
-    }
