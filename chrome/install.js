@@ -3,7 +3,7 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.sync.set({
         show_icon: {
             name: 'Show Terse icon on all pages',
-            description: 'Controls visibility of the Terse summarization tool as a floating icon on all applicable pages.',
+            description: 'Show Terse summarization tool as a floating icon on all applicable pages.',
             type: 'boolean',
             value: true,
             sort_order: 1,
@@ -11,8 +11,8 @@ chrome.runtime.onInstalled.addListener(() => {
         },
 
         suppress_landing: {
-            name: 'Suppress on landing pages',
-            description: 'If set, hide the Terse button on all website home pages (i.e. hidden on \'wikipedia.org\', but shown on \'wikipedia.org/article\')',
+            name: 'Suppress Terse icon on landing and search pages',
+            description: 'Hide Terse floating icon on search pages and first page of every website (e.g., hidden on \'website.com\', but shown on \'website.com/article\')',
             type: 'boolean',
             value: true,
             sort_order: 2,
@@ -21,7 +21,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
         summary_size: {
             name: 'Summary size',
-            description: 'Determines the level of verbosity of the generated page summary.',
+            description: 'Controls how many key sentences should be returned to summarize the page',
             type: 'slider',
             min: 1,
             max: 3,
