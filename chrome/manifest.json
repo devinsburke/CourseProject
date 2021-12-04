@@ -18,7 +18,6 @@
       "js/language-processing.js",
       "js/sentence-document.js",
       "js/page-content.js",
-      "js/processor.js",
       "injected/injected.js"
     ]
   }],
