@@ -64,7 +64,7 @@ async function setSettingValue(key, value) {
 
 function createMaterialIcon(iconString, href) {
     var icon = document.createElement('span');
-    icon.classList.add('material-icons-outlined', 'icon');
+    icon.classList.add('icon');
     icon.innerHTML = iconString;
     if (href != null) {
         var ref = document.createElement('a');

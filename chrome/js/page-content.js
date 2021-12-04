@@ -45,7 +45,7 @@ class TerseContentScraper {
 		for (var el of element.querySelectorAll('ol,p,span,td,ul'))
 			if (this.getTagConsumption(el, 'a') > 0.4)
 				this.destroyElement(el);
-		for (var el of element.querySelectorAll('div > a:first-child,section > a:first-child'))
+		for (var el of element.querySelectorAll('div > a:first-of-type,section > a:first-of-type'))
 			if (this.getTagConsumption(el.parentNode, 'a') > 0.4)
 				this.destroyElement(el.parentNode);
 
