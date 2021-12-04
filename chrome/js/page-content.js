@@ -2,15 +2,33 @@ const rGoodContent = /article|body|content|entry|hentry|main|page|post|text|blog
 const rBadContent = /attribution|combx|comment|contact|reference|foot|footer|footnote|infobox|masthead|media|meta|outbrain|promo|related|scroll|shoutbox|sidebar|sponsor|shopping|tags|tool|widget|community|disqus|extra|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|pagination|pager|popup|tweet|twitter/i;
 const blockElements = ['ADDRESS', 'ARTICLE', 'ASIDE', 'BLOCKQUOTE', 'BR', 'CANVAS', 'DD', 'DIV', 'FIELDSET', 'FIGCAPTION', 'FIGURE', 'FOOTER', 'FORM', 'HR', 'LI', 'MAIN', 'NAV', 'NOSCRIPT', 'OL', 'P', 'PRE', 'SECTION', 'TABLE', 'TD', 'TH', 'TR', 'THEAD', 'TFOOT', 'UL', 'VIDEO'];
 const stopSelectors = {
-	role: ['alert', 'alertdialog', 'banner', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
+	role: ['alert', 'alertdialog', 'banner', 'button', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
 	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'figcaption', 'footer', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'label', 'link', 'menu', 'menuitem', 'meta', 'nav', 'noscript', 'ol', 'output', 'pre', 'script', 'style', 'sup', 'tfoot'],
-	visual: ['address', 'canvas', 'embed', 'figure', 'form', 'frame', 'iframe', 'img', 'input', 'object', 'select', 'svg', 'textarea', 'video'],
-	class: ['blogroll', 'caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'remark', 'rss', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tags', 'thumb', 'tool', 'widget', 'wikitable'],
+	visual: ['address', 'button', 'canvas', 'embed', 'figure', 'form', 'frame', 'iframe', 'img', 'input', 'object', 'select', 'svg', 'textarea', 'video'],
+	class: ['blogroll', 'caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'related-articles', 'remark', 'rss', 's-popover', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tag-cloud', 'tags', 'thumb', 'tool', 'user-info', 'widget', 'wikitable'],
 };
 
 class TerseContentScraper {
 	getDescription(document) {
-		var metas = document.querySelectorAll('meta[description]');
+		var metas = document.querySelectorAll('meta[description],meta[name=description],meta[property=og\\:description]');
+		for (var meta of metas) {
+			if (meta.description)
+				return meta.description;
+			if (meta.content)
+				return meta.content;
+		}
+		var shortDescription = document.querySelectorAll('.shortdescription');
+		if (shortDescription.length == 1)
+			return shortDescription[0].innerText;
+
+		return '';
+	}
+
+	getTitle(document) {
+		var h1s = document.querySelectorAll('h1');
+		if (h1s.length == 1)
+			return h1s[0].innerText;
+		return document.title.split(' - ')[0].trim();
     }
 
 	getContent(body) {
@@ -24,10 +42,12 @@ class TerseContentScraper {
 
 		for (var el of element.querySelectorAll(textStopSelector))
 			this.destroyElement(el);
-
-		for (var el of element.querySelectorAll('li,td'))
+		for (var el of element.querySelectorAll('ol,p,span,td,ul'))
 			if (this.getTagConsumption(el, 'a') > 0.4)
 				this.destroyElement(el);
+		for (var el of element.querySelectorAll('div > a:first-child,section > a:first-child'))
+			if (this.getTagConsumption(el.parentNode, 'a') > 0.4)
+				this.destroyElement(el.parentNode);
 
         var allElements = element.querySelectorAll('p,td,pre,span,div');
 		var nodes = [];
@@ -49,7 +69,7 @@ class TerseContentScraper {
 
             var score = 1;
             score += innerText.split(',').length;
-			score += Math.min(Math.floor(innerText.length / 100), 3);
+			score += Math.min(innerText.length / 100, 3);
             score += 1 - this.getTagConsumption(node, 'a');
 			node.parentNode.score += score;
 			if (node.parentNode.parentNode)
@@ -103,11 +123,11 @@ class TerseContentScraper {
 				this.destroyElement(item);
 			}
 			else if (text.split(',').length-1 < 10) {
-                var p      = item.getElementsByTagName("p").length;
-                var img    = item.getElementsByTagName("img").length;
-                var li     = item.getElementsByTagName("li").length-100;
-                var input  = item.getElementsByTagName("input").length;
-				var embed  = item.getElementsByTagName("embed").length;
+				var p = item.getElementsByTagName("p").length;
+				var img = item.getElementsByTagName("img").length;
+				var li = item.getElementsByTagName("li").length - 100;
+				var input = item.getElementsByTagName("input").length;
+				var embed = item.getElementsByTagName("embed").length;
 
 				if (img > p || li > p && !['UL', 'OL'].includes(item.tagName)) {
 					this.destroyElement(item);
