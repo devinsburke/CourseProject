@@ -109,7 +109,6 @@ function generateTests() {
     var container = document.getElementById('tests');
     terseTests.forEach(t => {
         var kDocs = performTest(t.sentences.map(s => s.sentence));
-        console.log(kDocs);
 
         var elem = document.createElement('li');
         var header = document.createElement('div');
@@ -132,8 +131,6 @@ function generateTests() {
 
         var results = document.createElement('div');
         results.classList.add('test-results');
-        results.innerHTML = 'RESULTS GO HERE';
-        header.appendChild(results);
 
         var content = document.createElement('div');
         content.classList.add('test-content', 'collapsed');
@@ -152,6 +149,9 @@ function generateTests() {
         head.appendChild(head3);
         body.appendChild(head);
 
+        var overallScore = 0;
+        var totalRetrieved = 0;
+
         t.sentences.forEach(s => {
             var row = document.createElement('tr');
             var cellSentence = document.createElement('td');
@@ -164,6 +164,8 @@ function generateTests() {
             var cellRetrieved = document.createElement('td');
             if (kDocs.filter(k => k.original == formatSentence(s.sentence)).length > 0) {
                 cellRetrieved.appendChild(createMaterialIcon('check', null));
+                totalRetrieved++;
+                overallScore += s.score;
             }
             cellRetrieved.classList.add('retrieved');
 
@@ -173,6 +175,8 @@ function generateTests() {
             body.appendChild(row);
         });
 
+        results.innerHTML = Math.round(overallScore / totalRetrieved * 100) + '%';
+        header.appendChild(results);
         table.appendChild(body);
         content.appendChild(table);
         elem.appendChild(content);
