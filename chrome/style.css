@@ -94,25 +94,21 @@
 	-webkit-font-smoothing: antialiased;
 }
 
-terse {
-	overflow: auto !important;
-}
-terse, terse * {
+terse, terse *, terse-invalid-page {
 	box-sizing: content-box !important;
 	border: 0 !important;
 	color: #333 !important;
 	cursor: default !important;
 	font: initial !important;
 	font-family: 'Noto Sans', sans-serif !important;
-	font-size: 1em !important;
+	font-size: 16px !important;
 	line-height: initial !important;
 	opacity: 1 !important;
 	padding: 0 !important;
 	margin: 0 !important;
 }
-
-terse-invalid-page {
-	display: none !important;
+terse {
+	overflow: auto !important;
 }
 
 terse-h1, terse-h2 {
@@ -128,7 +124,7 @@ terse-h1, terse-h2 {
 }
 
 terse-h1 {
-	font-size: 42px !important;
+	font-size: 2.5em !important;
 	position: absolute !important;
 	top: 28px;
 	left: 74px;
@@ -187,7 +183,7 @@ terse-bg {
 	terse-bg::after {
 		color: black !important;
 		content: 'Σ' !important;
-		font-size: 120px !important;
+		font-size: 7.5em !important;
 		font-weight: 600 !important;
 		opacity: 1 !important;
 		position: absolute !important;
@@ -201,7 +197,11 @@ terse-span {
 	text-align: center !important;
 	line-height: .75 !important;
 	font-weight: 600 !important;
-	font-size: 42px !important;
+	font-size: 2.65em !important;
+}
+
+terse-description {
+	display: block !important;
 }
 
 terse-topic-ul {
@@ -241,11 +241,10 @@ terse-ul {
 
 	terse-ul terse-li {
 		display: list-item !important;
-		font-size: 18px !important;
 	}
 
 		terse-ul terse-li:not(:last-child) {
-			margin-bottom: 5px !important;
+			margin-bottom: 0.3em !important;
 		}
 
 body:not(.terse-popup) terse {
@@ -264,6 +263,7 @@ body:not(.terse-popup) terse {
 }
 
 	body:not(.terse-popup) terse:not(:hover) terse-insight-subtitle,
+	body:not(.terse-popup) terse:not(:hover) terse-description,
 	body:not(.terse-popup) terse:not(:hover) terse-h1,
 	body:not(.terse-popup) terse:not(:hover) terse-h2,
 	body:not(.terse-popup) terse:not(:hover) terse-ul,
