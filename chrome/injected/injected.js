@@ -1,14 +1,14 @@
 ﻿chrome.storage.sync.get(null, function (settings) {
+	chrome.runtime.onMessage.addListener((msg, _, response) => {
+		if (msg.from === 'popup' && msg.subject === 'body')
+			response(createTersePageElement(settings.summary_size.value, settings.suppress_landing.value).outerHTML);
+	});
+
 	if (settings.show_icon.value) {
 		var element = createTersePageElement(settings.summary_size.value, settings.suppress_landing.value);
 		element.classList.add('terse-icon');
 		document.body.appendChild(element);
 	}
-
-	chrome.runtime.onMessage.addListener((msg, _, response) => {
-		if (msg.from === 'popup' && msg.subject === 'body')
-			response(createTersePageElement(settings.summary_size.value, settings.suppress_landing.value).outerHTML);
-	});
 });
 
 function createTersePageElement(summarySizeOptionValue, suppressLanding) {
@@ -42,7 +42,6 @@ function createTersePageElement(summarySizeOptionValue, suppressLanding) {
 	element.appendChild(meta);
 
 	var sp = document.createElement('terse-span');
-	sp.classList.add('material-icons-outlined');
 	sp.innerHTML = 'Σ';
 	element.appendChild(sp);
 
@@ -58,7 +57,7 @@ function createTersePageElement(summarySizeOptionValue, suppressLanding) {
 
 	if (description) {
 		var descriptionTitle = document.createElement('terse-h2');
-		descriptionTitle.innerHTML = 'Description';
+		descriptionTitle.innerHTML = 'Official Description';
 		element.appendChild(descriptionTitle);
 
 		var descriptionEl = document.createElement('terse-description');
