@@ -6,10 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 from: 'popup',
                 subject: 'body'
             },
-            obj => {
-                document.body.innerHTML = obj.element;
-                document.body.classList.add('terse-popup');
-            }
+            el => document.body.innerHTML = el
         );
     });
 });

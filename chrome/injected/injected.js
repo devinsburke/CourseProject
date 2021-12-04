@@ -1,9 +1,13 @@
 ﻿chrome.storage.sync.get(null, function (settings) {
-	if (settings.show_icon.value)
-		document.body.appendChild(createTersePageElement(settings.summary_size.value, settings.suppress_landing.value));
+	if (settings.show_icon.value) {
+		var element = createTersePageElement(settings.summary_size.value, settings.suppress_landing.value);
+		element.classList.add('terse-icon');
+		document.body.appendChild(element);
+	}
+
 	chrome.runtime.onMessage.addListener((msg, _, response) => {
 		if (msg.from === 'popup' && msg.subject === 'body')
-			response({ 'element': createTersePageElement(settings.summary_size.value, settings.suppress_landing.value).outerHTML });
+			response(createTersePageElement(settings.summary_size.value, settings.suppress_landing.value).outerHTML);
 	});
 });
 
@@ -63,7 +67,8 @@ function createTersePageElement(summarySizeOptionValue, suppressLanding) {
 	}
 
 	var topicTitle = document.createElement('terse-h2');
-	topicTitle.innerHTML = 'Common Topics';
+	topicTitle.innerHTML = 'Topics (Word Clusters)';
+	topicTitle.setAttribute('data-count', topTopics.length);
 	element.appendChild(topicTitle);
 	var topicUl = document.createElement('terse-topic-ul');
 	for (const [topic, topicObj] of topTopics) {
@@ -76,6 +81,7 @@ function createTersePageElement(summarySizeOptionValue, suppressLanding) {
 
 	var sentenceTitle = document.createElement('terse-h2');
 	sentenceTitle.innerHTML = 'Summary (Key Sentences)';
+	sentenceTitle.setAttribute('data-count', topDocs.length);
 	element.appendChild(sentenceTitle);
 	var sentenceUl = document.createElement('terse-ul');
 	topDocs.forEach(doc => {

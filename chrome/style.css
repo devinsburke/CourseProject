@@ -204,6 +204,18 @@ terse-description {
 	display: block !important;
 }
 
+terse-h2[data-count]::after,
+terse-topic-ul terse-li::after {
+	content: attr(data-count) !important;
+	border: initial !important;
+	border-left: 1px solid #ccc !important;
+	border-width: 1px !important;
+	color: #bbb !important;
+	font-weight: normal !important;
+	margin: 0 0 0 0.5em !important;
+	padding: 0 0 0 0.5em !important;
+}
+
 terse-topic-ul {
 	display: block !important;
 	margin: 0 !important;
@@ -222,15 +234,6 @@ terse-topic-ul {
 		padding: 0.55em 0.75em !important;
 		text-transform: uppercase !important;
 	}
-	terse-topic-ul terse-li::after {
-		content: attr(data-count) !important;
-		border: initial !important;
-		border-left: 1px solid #ccc !important;
-		border-width: 1px !important;
-		color: #999 !important;
-		margin: 0 0 0 0.5em !important;
-		padding: 0 0 0 0.5em !important;
-	}
 
 terse-ul {
 	display: block !important;
@@ -247,7 +250,7 @@ terse-ul {
 			margin-bottom: 0.3em !important;
 		}
 
-body:not(.terse-popup) terse {
+terse.terse-icon {
 	background: #fff !important;
 	border-radius: 20px !important;
 	box-shadow: 0px 2px 11px -2px #000 !important;
@@ -262,21 +265,21 @@ body:not(.terse-popup) terse {
 	z-index: 999999 !important;
 }
 
-	body:not(.terse-popup) terse:not(:hover) terse-insight-subtitle,
-	body:not(.terse-popup) terse:not(:hover) terse-description,
-	body:not(.terse-popup) terse:not(:hover) terse-h1,
-	body:not(.terse-popup) terse:not(:hover) terse-h2,
-	body:not(.terse-popup) terse:not(:hover) terse-ul,
-	body:not(.terse-popup) terse:not(:hover) terse-topic-ul,
-	body:not(.terse-popup) terse:not(:hover) terse-bg {
+	terse.terse-icon:not(:hover) terse-insight-subtitle,
+	terse.terse-icon:not(:hover) terse-description,
+	terse.terse-icon:not(:hover) terse-h1,
+	terse.terse-icon:not(:hover) terse-h2,
+	terse.terse-icon:not(:hover) terse-ul,
+	terse.terse-icon:not(:hover) terse-topic-ul,
+	terse.terse-icon:not(:hover) terse-bg {
 		display: none !important;
 	}
 
-	body:not(.terse-popup) terse:not(:hover) terse-span {
+	terse.terse-icon:not(:hover) terse-span {
 		display: block !important;
 	}
 
-	body:not(.terse-popup) terse:hover {
+	terse.terse-icon:hover {
 		height: 75vh !important;
 		padding: 2.5em !important;
 		min-width: 450px !important;
