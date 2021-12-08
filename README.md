@@ -25,10 +25,10 @@ When enabled, hover over the Terse icon in the bottom-right of a page to see the
 * **Official Description**:  
   Meta data description from the page, usually shown on search engines. 
 
-* **Topics (Word Clusters)**: 
+* **Topics (Word Clusters)**:  
   Most frequent word combinations on the page. You can often guess an article’s subject given these topics. 
   
-* **Summary (Key Sentences)**:
+* **Summary (Key Sentences)**:  
   List of the most relevant sentences on the page, in order that they appear on the page. Relevance is judged by how similar each sentence is to the whole page. For example, a sentence about one specific player probably won’t be included because the words in that sentence don’t appear many times in the overall page. To adjust the number of sentences shown, see *Configuration*. 
   
 ### Manual Summarization 
@@ -40,13 +40,13 @@ The extension has settings to adjust visibility, summarization length, and suppr
 
 This will open a new tab that allows you to maintain the following settings: 
 
-1. **Show terse icon on all pages**: 
+1. **Show terse icon on all pages**:  
   When enabled, the Terse extension icon will be shown on the bottom right corner of all pages deemed applicable to summarize. This allows for quick utilization of the extensions summarization capability by simply hovering over the injected icon. 
 
-2. **Suppress Terse icon on landing and search pages**: 
+2. **Suppress Terse icon on landing and search pages**:  
   When enabled, the extension icon will not be visible on any website landing page, meaning the home page of a given website. Home pages often do not contain large amounts of text and are mostly used for navigation purposes, meaning summarization is extremely unlikely to be useful. In addition, the icon will be hidden on search engine pages such as Google or Bing, as these results are also very navigation focused 
 
-3. **Summary size**: 
+3. **Summary size**:  
   This setting allows modification of the length of the generated page summary, with 3 available options of 5%, 10%, and 15%. By default, 10% is the selected option, meaning when a page is summarized it will target a summarization size of 10% of the original text-based content. 
 
 The Options page also contains a **Sample Results** section, which outlines extension performance against previously recorded results from end users against randomly selected Wikipedia articles. This section is purely informative but advertises a sentence selection accuracy of roughly 76% when compared to optimal user selected results. 
