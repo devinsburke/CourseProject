@@ -4,7 +4,7 @@ const blockElements = ['ADDRESS', 'ARTICLE', 'ASIDE', 'BLOCKQUOTE', 'BR', 'CANVA
 const stopSelectors = {
 	role: ['alert', 'alertdialog', 'banner', 'button', 'columnheader', 'combobox', 'dialog', 'directory', 'figure', 'heading', 'img', 'listbox', 'marquee', 'math', 'menu', 'menubar', 'menuitem', 'navigation', 'option', 'search', 'searchbox', 'status', 'toolbar', 'tooltip'],
 	tag: ['cite', 'code', 'dialog', 'dl', 'dt', 'figcaption', 'footer', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'label', 'link', 'menu', 'menuitem', 'meta', 'nav', 'noscript', 'ol', 'output', 'pre', 'script', 'style', 'sup', 'tfoot'],
-	visual: ['address', 'blockquotes', 'button', 'canvas', 'embed', 'figure', 'form', 'frame', 'iframe', 'img', 'input', 'object', 'select', 'svg', 'textarea', 'video'],
+	visual: ['address', 'blockquote', 'button', 'canvas', 'embed', 'figure', 'form', 'frame', 'iframe', 'img', 'input', 'object', 'select', 'svg', 'textarea', 'video'],
 	class: ['blogroll', 'caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'related-articles', 'remark', 'rss', 's-popover', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tag-cloud', 'tags', 'thumb', 'tool', 'user-info', 'widget', 'wikitable'],
 };
 
@@ -103,9 +103,9 @@ class TerseContentScraper {
 		});
 		if (['DIV'].includes(e.tagName))
 			e.score += 5;
-		else if (['PRE','TD','BLOCKQUOTE'].includes(e.tagName))
+		else if (['PRE','TD'].includes(e.tagName))
 			e.score += 3;
-		else if (['OL','UL','DD','LI','FORM'].includes(e.tagName))
+		else if (['UL','DD','LI'].includes(e.tagName))
 			e.score -= 3;
     }
 
