@@ -2,6 +2,8 @@
 
 Terse is a browser extension for Google Chrome that summarizes any open webpage that is primarily text-based, such as a news article, encyclopedia entry, or blog post. It displays the primary sentences and topics of the page. 
 
+> *For a voiced presentation with embedded videos demoing purpose, installation and usage of the extension, please see the [PowerPoint presentation](https://github.com/devinsburke/CourseProject/blob/main/Presentation.zip) uploaded to the root of this GitHub repository.*
+
 ## Implementation Instructions 
 Terse is not presently on the Google Chrome store, so you must install the extension manually. If you do not have Chrome, you may download it from google.com/chrome. 
 
