@@ -32,7 +32,7 @@ When enabled, hover over the Terse icon in the bottom-right of a page to see the
 ### Manual Summarization 
 You may disable the Terse icon displaying automatically (see *Configuration*). In this case, when you wish to summarize an open page, you may still do so by clicking the extension icon in the Chrome browser toolbar, denoted by a puzzle piece. Then, click **Terse** to view the generated summary in a popup window. You may permanently show Terse in your toolbar by clicking the **Pin** icon to the right of the extension. 
 
-# Configuration 
+## Configuration 
 
 The extension has settings to adjust visibility, summarization length, and suppression on certain pages. To access these options, click the Extension (puzzle) icon in the top-right of your Chrome toolbar, then click the three dots next to Terse, and finally click **Options**. Alternatively, if you pinned the Terse icon in your toolbar, you may simply right-click it and click **Options**. 
 
