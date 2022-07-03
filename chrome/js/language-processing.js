@@ -1,4 +1,4 @@
-class TerseNaturalLanguageProcessor {
+class TilderNaturalLanguageProcessor {
     constructor(stopwords = defaultStopwords) {
         this.stopwords = stopwords;
     }

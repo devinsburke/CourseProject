@@ -8,7 +8,7 @@ const stopSelectors = {
 	class: ['blogroll', 'caption', 'citation', 'comment', 'community', 'contact', 'copyright', 'extra', 'foot', 'footer', 'footnote', 'infobox', 'masthead', 'media', 'meta', 'metadata', 'mw-jump-link', 'mw-revision', 'navigation', 'navigation-not-searchable', 'noprint', 'outbrain', 'pager', 'popup', 'promo', 'reference', 'reference-text', 'references', 'related', 'related-articles', 'remark', 'rss', 's-popover', 'scroll', 'shopping', 'shoutbox', 'sidebar', 'sponsor', 'tag-cloud', 'tags', 'thumb', 'tool', 'user-info', 'widget', 'wikitable'],
 };
 
-class TerseContentScraper {
+class TilderContentScraper {
 	getDescription(document) {
 		var metas = document.querySelectorAll('meta[description],meta[name=description],meta[property=og\\:description]');
 		for (var meta of metas) {

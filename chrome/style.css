@@ -49,7 +49,7 @@
 	-webkit-font-smoothing: antialiased;
 }
 
-terse, terse *, terse-invalid-page {
+tilder, tilder *, tilder-invalid-page {
 	box-sizing: content-box !important;
 	border: 0 !important;
 	color: #333 !important;
@@ -64,11 +64,11 @@ terse, terse *, terse-invalid-page {
 	text-size-adjust: none !important;
 	text-rendering: unset !important;
 }
-terse {
+tilder {
 	overflow: auto !important;
 }
 
-terse-h1, terse-h2 {
+tilder-h1, tilder-h2 {
 	display: block !important;
 	margin: 0 !important;
 	opacity: 1 !important;
@@ -80,7 +80,7 @@ terse-h1, terse-h2 {
 	z-index: 999 !important;
 }
 
-terse-h1 {
+tilder-h1 {
 	font-size: 2.5em !important;
 	position: absolute !important;
 	top: 32px;
@@ -88,16 +88,16 @@ terse-h1 {
 	right: 24px;
 }
 
-terse-h2 {
+tilder-h2 {
 	font-weight: bold !important;
 	margin: 1em 0 0.5em 0 !important;
 }
 
-	terse-h2:first-of-type {
+	tilder-h2:first-of-type {
 		margin-top: 92px !important;
 	}
 
-terse-insight-subtitle {
+tilder-insight-subtitle {
 	background: #000 !important;
 	border-radius: 3px !important;
 	color: #fff !important;
@@ -114,7 +114,7 @@ terse-insight-subtitle {
 	z-index: 2000 !important;
 }
 
-terse-bg {
+tilder-bg {
 	display: block !important;
 	height: 140px !important;
 	overflow: hidden !important;
@@ -124,7 +124,7 @@ terse-bg {
 	right: 0 !important;
 }
 
-	terse-bg::before {
+	tilder-bg::before {
 		background: #e1e1e1 !important;
 		content: '' !important;
 		display: block !important;
@@ -137,7 +137,7 @@ terse-bg {
 		z-index: 100 !important;
 	}
 
-	terse-bg::after {
+	tilder-bg::after {
 		color: black !important;
 		content: 'Σ' !important;
 		font-size: 120px !important;
@@ -149,7 +149,7 @@ terse-bg {
 		z-index: 1000 !important;
 	}
 
-terse-span {
+tilder-span {
 	display: none !important;
 	font-weight: 600 !important;
 	font-size: 2.65em !important;
@@ -157,12 +157,12 @@ terse-span {
 	text-align: center !important;
 }
 
-terse-description {
+tilder-description {
 	display: block !important;
 }
 
-terse-h2[data-count]::after,
-terse-topic-ul terse-li::after {
+tilder-h2[data-count]::after,
+tilder-topic-ul tilder-li::after {
 	content: attr(data-count) !important;
 	border: initial !important;
 	border-left: 1px solid #ccc !important;
@@ -173,13 +173,13 @@ terse-topic-ul terse-li::after {
 	padding: 0 0 0 0.5em !important;
 }
 
-terse-topic-ul {
+tilder-topic-ul {
 	display: block !important;
 	margin: 0 !important;
 	padding: 0 !important;
 }
 
-	terse-topic-ul terse-li {
+	tilder-topic-ul tilder-li {
 		background: #eee !important;
 		border-radius: 5px !important;
 		color: #555 !important;
@@ -192,22 +192,22 @@ terse-topic-ul {
 		text-transform: uppercase !important;
 	}
 
-terse-ul {
+tilder-ul {
 	display: block !important;
 	list-style-type: disc !important;
 	margin-left: 2em !important;
 	padding: initial !important;
 }
 
-	terse-ul terse-li {
+	tilder-ul tilder-li {
 		display: list-item !important;
 	}
 
-		terse-ul terse-li:not(:last-child) {
+		tilder-ul tilder-li:not(:last-child) {
 			margin-bottom: 0.3em !important;
 		}
 
-terse.terse-icon {
+tilder.tilder-icon {
 	background: #fff !important;
 	border-radius: 20px !important;
 	bottom: 1em !important;
@@ -222,21 +222,21 @@ terse.terse-icon {
 	z-index: 999999 !important;
 }
 
-	terse.terse-icon:not(:hover) terse-insight-subtitle,
-	terse.terse-icon:not(:hover) terse-description,
-	terse.terse-icon:not(:hover) terse-h1,
-	terse.terse-icon:not(:hover) terse-h2,
-	terse.terse-icon:not(:hover) terse-ul,
-	terse.terse-icon:not(:hover) terse-topic-ul,
-	terse.terse-icon:not(:hover) terse-bg {
+	tilder.tilder-icon:not(:hover) tilder-insight-subtitle,
+	tilder.tilder-icon:not(:hover) tilder-description,
+	tilder.tilder-icon:not(:hover) tilder-h1,
+	tilder.tilder-icon:not(:hover) tilder-h2,
+	tilder.tilder-icon:not(:hover) tilder-ul,
+	tilder.tilder-icon:not(:hover) tilder-topic-ul,
+	tilder.tilder-icon:not(:hover) tilder-bg {
 		display: none !important;
 	}
 
-	terse.terse-icon:not(:hover) terse-span {
+	tilder.tilder-icon:not(:hover) tilder-span {
 		display: block !important;
 	}
 
-	terse.terse-icon:hover {
+	tilder.tilder-icon:hover {
 		height: 75vh !important;
 		min-width: 450px !important;
 		padding: 2.5em !important;
@@ -244,6 +244,6 @@ terse.terse-icon {
 		width: calc(50% - 3em) !important;
 	}
 
-terse-invalid-page.terse-icon {
+tilder-invalid-page.tilder-icon {
 	display: none !important;
 }

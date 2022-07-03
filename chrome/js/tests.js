@@ -1,5 +1,5 @@
 
-const terseTests = [
+const tilderTests = [
     {
         'name': 'Port of Galveston',
         'url': 'https://en.wikipedia.org/w/index.php?title=Port_of_Galveston&oldid=1035256476',

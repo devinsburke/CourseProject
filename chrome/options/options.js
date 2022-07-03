@@ -99,7 +99,7 @@ function formatSentence(sentence) {
 }
 
 function performTest(sentences) {
-    var processor = new TerseSentencesDocumentProcessor(null, 0.1);
+    var processor = new TilderSentencesDocumentProcessor(null, 0.1);
     sentences = sentences.map(s => formatSentence(s));
     processor.processSentencesDocuments(sentences);
     return processor.getTopKDocuments();
@@ -107,7 +107,7 @@ function performTest(sentences) {
 
 function generateTests() {
     var container = document.getElementById('tests');
-    terseTests.forEach(t => {
+    tilderTests.forEach(t => {
         var kDocs = performTest(t.sentences.map(s => s.sentence));
 
         var elem = document.createElement('li');
