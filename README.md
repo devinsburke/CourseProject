@@ -2,14 +2,12 @@
 
 Tilder is a browser extension for Google Chrome that summarizes any open webpage that is primarily text-based, such as a news article, encyclopedia entry, or blog post. It displays the primary sentences and topics of the page. 
 
-*For a voiced presentation with embedded videos demoing purpose, installation and usage of the extension, please see the [linked presentation](https://drive.google.com/file/d/17JMCfwKtx5T6gQC5xFxG5gVZdijI6hV1/view?usp=sharing) or the voiced [PowerPoint presentation](https://github.com/devinsburke/CourseProject/blob/main/Presentation.zip) uploaded to the root of this GitHub repository.*
-
 ## Implementation Instructions 
 Tilder is not presently on the Google Chrome store, so you must install the extension manually. If you do not have Chrome, you may download it from google.com/chrome. 
 
 First, download the Tilder extension source code from GitHub.com using the following command: 
 
-> git clone https://github.com/devinsburke/CourseProject.git C:\tilder 
+> git clone https://github.com/devinsburke/tilder.git C:\tilder 
 
 Next, open Google Chrome and navigate to the extensions page by visiting chrome://extensions/ or by clicking the **puzzle piece** icon and choosing **Manage extensions**. From the **Extensions** page, enable **Developer mode** by clicking the toggle in the page’s top-right corner. Three buttons will appear in the upper half of the screen. Click **Load unpacked**, and then browse to *C:\tilder\chrome*. If you downloaded the GitHub repository to a different folder, input that folder and select the **chrome** subfolder within. The **Tilder 1.0** extension will then appear in your extension list. 
 
