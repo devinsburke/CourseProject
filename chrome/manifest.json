@@ -23,7 +23,6 @@
         "style.css"
       ],
       "js": [
-        "js/tests.js",
         "js/language-processing.js",
         "js/sentence-document.js",
         "js/page-content.js",
