@@ -24,31 +24,23 @@ class TilderSentencesDocumentProcessor {
 			sentence: new RegExp('(?:[\\!\\?\\r\\n]+[\"\']?)|(?:(?<!\\b(?:' + this.abbreviations.join('|') + '|[a-z]))\\.+(?![\\w\\.\\!\\?])[\"\']?)', 'gi'),
 			word: new RegExp('(?:^\\[.*\\])|(?:[^a-z\\.\\s]+)|(?:(?<!\\b[a-z])\\.)|(?:(?<!\\b[a-z]\\.)\\s)|(?:\\s(?![a-z]\\.))', 'gi'),
 		}
-		if (text)
-			this.splitSentencesAsDocuments(text)
-	}
-
-	splitSentencesAsDocuments(text) {
-		text = text
+		const docs = text
 			.replace('."', '".')
 			.replace('.\'', '\'.')
 			.replace('?"', '"?')
 			.replace('?\'', '\'?')
 			.replace('!"', '"!')
 			.replace('!\'', '\'!')
-		const docs = text.split(this.terminators.sentence).map(s => s && s.trim()).filter(n => n)
-		this.processSentencesDocuments(docs)
-	}
-
-	processSentencesDocuments(documents) {
-		const lists = documents.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w))
-		const bags = lists.map(s => this.nlp.toBagOfWords(s, true))
-		
+			.split(this.terminators.sentence)
+			.map(s => s && s.trim())
+			.filter(n => n)
+		const lists = docs.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w))
 		this.topics = this.nlp.toTopics(lists, 4, true)
 		
+		const bags = lists.map(s => this.nlp.toBagOfWords(s, true))
 		const scores = this.nlp.getSimilarityScores(false, ...bags)
-		this.documents = documents.map((s, i) => new TilderSentenceDocument(s, lists[i], bags[i], scores[i], i))
-    }
+		this.documents = docs.map((s, i) => new TilderSentenceDocument(s, lists[i], bags[i], scores[i], i))
+	}
 
 	getTopKValue() {
 		return Math.ceil(this.topPercent * this.documents.length)

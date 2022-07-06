@@ -3,14 +3,12 @@ class TilderNaturalLanguageProcessor {
         this.stopwords = stopwords
     }
 
-    toBagOfWords(words, removeStopwords = false) {
-        if (removeStopwords)
-            words = this.removeStopwords(words)
-
+    toBagOfWords(words, removeStopwords = true) {
         const countByWord = new Map()
         countByWord.innerLength = words.length
         for (const w of words)
-            countByWord.set(w, (countByWord.get(w) ?? 0) + 1)
+            if (!removeStopwords || !this.stopwords.includes(w.toLowerCase()))
+                countByWord.set(w, (countByWord.get(w) ?? 0) + 1)
         return countByWord
     }
 
