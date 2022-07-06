@@ -3,29 +3,29 @@ const defaultAbbreviations = ['abr','apr','aug','ave','cir','ct','dec','dr','ed'
 
 class TilderSentenceDocument {
 	constructor(original, words, vocabulary, score, sortOrder) {
-		this.original = original;
-		this.words = words;
-		this.vocabulary = vocabulary;
-		this.score = score;
-		this.sortOrder = sortOrder;
+		this.original = original
+		this.words = words
+		this.vocabulary = vocabulary
+		this.score = score
+		this.sortOrder = sortOrder
 	}
 }
 
 class TilderSentencesDocumentProcessor {
 	constructor(text, topPercent=0.1, stopwords=defaultStopwords, abbreviations=defaultAbbreviations) {
-		this.text = text;
-		this.stopwords = stopwords;
-		this.abbreviations = abbreviations;
-		this.documents = [];
-		this.topics = [];
-		this.topPercent = topPercent;
-		this.nlp = new TilderNaturalLanguageProcessor(this.stopwords);
+		this.text = text
+		this.stopwords = stopwords
+		this.abbreviations = abbreviations
+		this.documents = []
+		this.topics = []
+		this.topPercent = topPercent
+		this.nlp = new TilderNaturalLanguageProcessor(this.stopwords)
 		this.terminators = {
 			sentence: new RegExp('(?:[\\!\\?\\r\\n]+[\"\']?)|(?:(?<!\\b(?:' + this.abbreviations.join('|') + '|[a-z]))\\.+(?![\\w\\.\\!\\?])[\"\']?)', 'gi'),
 			word: new RegExp('(?:^\\[.*\\])|(?:[^a-z\\.\\s]+)|(?:(?<!\\b[a-z])\\.)|(?:(?<!\\b[a-z]\\.)\\s)|(?:\\s(?![a-z]\\.))', 'gi'),
-		};
+		}
 		if (text)
-			this.splitSentencesAsDocuments(text);
+			this.splitSentencesAsDocuments(text)
 	}
 
 	splitSentencesAsDocuments(text) {
@@ -35,23 +35,23 @@ class TilderSentencesDocumentProcessor {
 			.replace('?"', '"?')
 			.replace('?\'', '\'?')
 			.replace('!"', '"!')
-			.replace('!\'', '\'!');
-		var docs = text.split(this.terminators.sentence).map(s => s && s.trim()).filter(n => n);
-		this.processSentencesDocuments(docs);
+			.replace('!\'', '\'!')
+		const docs = text.split(this.terminators.sentence).map(s => s && s.trim()).filter(n => n)
+		this.processSentencesDocuments(docs)
 	}
 
 	processSentencesDocuments(documents) {
-		var lists = documents.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w));
-		var bags = lists.map(s => this.nlp.toBagOfWords(s, true));
-
-		this.topics = this.nlp.toTopics(lists, 4, true);
-
-		var scores = this.nlp.getSimilarityScores(false, ...bags);
-		this.documents = documents.map((s, i) => new TilderSentenceDocument(s, lists[i], bags[i], scores[i], i));
+		const lists = documents.map(d => d.toLowerCase().split(this.terminators.word).map(w => w && w.trim()).filter(w => w))
+		const bags = lists.map(s => this.nlp.toBagOfWords(s, true))
+		
+		this.topics = this.nlp.toTopics(lists, 4, true)
+		
+		const scores = this.nlp.getSimilarityScores(false, ...bags)
+		this.documents = documents.map((s, i) => new TilderSentenceDocument(s, lists[i], bags[i], scores[i], i))
     }
 
 	getTopKValue() {
-		return Math.ceil(this.topPercent * this.documents.length);
+		return Math.ceil(this.topPercent * this.documents.length)
 	}
 
 	getTopKDocuments() {
@@ -59,16 +59,16 @@ class TilderSentencesDocumentProcessor {
 			.filter(d => d.score > 0)
 			.sort((a,b) => b.score-a.score)
 			.slice(0, this.getTopKValue())
-			.sort((a,b) => a.sortOrder-b.sortOrder);
+			.sort((a,b) => a.sortOrder-b.sortOrder)
 	}
 
 	getTopKTopics() {
-		var k = this.getTopKValue();
-		var topic2K = Math.ceil(2 * this.topPercent * this.topics.size);
-		var topics = [...this.topics.entries()];
-		var mainTopicCount = topics.filter(t => t.count > k).length;
+		const k = this.getTopKValue()
+		const topic2K = Math.ceil(2 * this.topPercent * this.topics.size)
+		const topics = [...this.topics.entries()]
+		const mainTopicCount = topics.filter(t => t.count > k).length
 		return topics
 			.sort((a, b) => b[1].score - a[1].score)
-			.slice(0, Math.max(mainTopicCount, Math.min(topic2K, k)));
+			.slice(0, Math.max(mainTopicCount, Math.min(topic2K, k)))
     }
 }
