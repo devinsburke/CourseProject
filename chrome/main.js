@@ -9,7 +9,7 @@
 		element.classList.add('tilder-icon');
 		document.body.appendChild(element);
 	}
-});
+})
 
 function createTilderPageElement(summarySizeOptionValue, suppressLanding) {
 	if (suppressLanding && ['', '/', '/search', '/search/'].includes(document.location.pathname.toLowerCase())) {

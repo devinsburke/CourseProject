@@ -1,5 +1,5 @@
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.clear();
+    chrome.storage.sync.clear()
     chrome.storage.sync.set({
         show_icon: {
             name: 'Show Tilder icon on all pages',
@@ -29,5 +29,5 @@ chrome.runtime.onInstalled.addListener(() => {
             sort_order: 3,
             configurable: true
         }
-    });
-});
+    })
+})
