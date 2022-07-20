@@ -13,7 +13,7 @@
     }
   ],
   "background": {
-    "service_worker": "install.js"
+    "service_worker": "preload.js"
   },
   "content_scripts": [
     {
@@ -23,10 +23,10 @@
         "style.css"
       ],
       "js": [
-        "js/language-processing.js",
-        "js/sentence-document.js",
-        "js/page-content.js",
-        "injected/injected.js"
+        "language-processing.js",
+        "sentence-document.js",
+        "page-content.js",
+        "main.js"
       ]
     }
   ],
