@@ -58,7 +58,7 @@ class TilderSentencesDocumentProcessor {
 		const k = this.getTopKValue()
 		const topic2K = Math.ceil(2 * this.topPercent * this.topics.size)
 		const topics = [...this.topics.entries()]
-		const mainTopicCount = topics.filter(t => t.count > k).length
+		const mainTopicCount = topics.reduce((a,b) => a + (b.count > k ? 1 : 0), 0)
 		return topics
 			.sort((a, b) => b[1].score - a[1].score)
 			.slice(0, Math.max(mainTopicCount, Math.min(topic2K, k)))

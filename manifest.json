@@ -26,6 +26,7 @@
         "language-processing.js",
         "sentence-document.js",
         "page-content.js",
+        "./src/viewModel.js",
         "main.js"
       ]
     }
