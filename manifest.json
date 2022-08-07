@@ -23,10 +23,10 @@
         "style.css"
       ],
       "js": [
-        "language-processing.js",
-        "sentence-document.js",
-        "page-content.js",
-        "./src/viewModel.js",
+        "./src/nlp.js",
+        "./src/processor.js",
+        "./src/scraper.js.js",
+        "./src/view.js",
         "main.js"
       ]
     }

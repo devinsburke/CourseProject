@@ -1,4 +1,4 @@
-class ViewModel {
+class View {
 	constructor(node) {
 		this.node = node
 

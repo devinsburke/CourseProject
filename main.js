@@ -2,7 +2,7 @@
 	const node = document.createElement('tilder')
 	node.classList.add('tilder-icon')
 	document.body.appendChild(node)
-	const view = new ViewModel(node)
+	const view = new View(node)
 
 	if (settings.show_icon.value) {
 		const summary = extractPageSummary(settings)
