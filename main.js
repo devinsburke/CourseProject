@@ -15,6 +15,7 @@
 			callback(summary)
 			view.update(summary)
 		}
+		return true
 	})
 })
 

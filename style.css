@@ -39,7 +39,6 @@ tilder *,
 	color: #333;
 	cursor: default !important;
 	font: normal 16px 'Noto Sans', sans-serif;
-	font-display: block !important;
 	line-height: 1.35 !important;
 	opacity: 1 !important;
 	-webkit-font-smoothing: unset !important;
@@ -47,14 +46,37 @@ tilder *,
 	text-rendering: unset !important;
 }
 tilder {
-	padding: 0 !important;
+	background: #fff !important;
+	border-radius: 20px !important;
+	bottom: 1em !important;
+	box-shadow: 0px 2px 11px -2px #000 !important;
+	display: inline-block !important;
+	height: 32px !important;
 	margin: 0 !important;
 	overflow: auto !important;
+	padding: 1em !important;
+	position: fixed !important;
+	right: 1em !important;
+	transition: 0.1s !important;
+	width: 32px !important;
+	z-index: 999999 !important;
 }
-.tilder {
-	overflow: auto !important;
-	padding: 2.5em;
-}
+	tilder[data-tilder-message] {
+		display: none !important;
+	}
+	tilder:not(:hover) * {
+		display: none !important;
+	}
+	tilder:not(:hover) tilder-span {
+		display: block !important;
+	}
+	tilder:hover {
+		height: 75vh !important;
+		min-width: 450px !important;
+		padding: 2.5em !important;
+		transition: 1s !important;
+		width: calc(50% - 3em) !important;
+	}
 
 tilder-h1, tilder-h2 {
 	display: block !important;
@@ -195,33 +217,3 @@ tilder-ul {
 			margin-bottom: 0.3em !important;
 		}
 
-tilder {
-	background: #fff !important;
-	border-radius: 20px !important;
-	bottom: 1em !important;
-	box-shadow: 0px 2px 11px -2px #000 !important;
-	display: inline-block !important;
-	height: 32px !important;
-	padding: 1em !important;
-	position: fixed !important;
-	right: 1em !important;
-	transition: 0.1s !important;
-	width: 32px !important;
-	z-index: 999999 !important;
-}
-
-	tilder:not(:hover) * {
-		display: none !important;
-	}
-
-	tilder:not(:hover) tilder-span {
-		display: block !important;
-	}
-
-	tilder:hover {
-		height: 75vh !important;
-		min-width: 450px !important;
-		padding: 2.5em !important;
-		transition: 1s !important;
-		width: calc(50% - 3em) !important;
-	}

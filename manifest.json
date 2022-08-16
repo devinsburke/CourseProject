@@ -1,6 +1,6 @@
 {
   "name": "Tilder",
-  "description": "Document summation for Google Chrome",
+  "description": "Document summation for Chrome",
   "version": "1.0",
   "manifest_version": 3,
   "options_page": "options/options.html",
@@ -25,7 +25,7 @@
       "js": [
         "./src/nlp.js",
         "./src/processor.js",
-        "./src/scraper.js.js",
+        "./src/scraper.js",
         "./src/view.js",
         "main.js"
       ]

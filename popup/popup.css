@@ -1,19 +1,29 @@
 html, body {
     background-color: #fff;
     font-size: 16px;
-    min-width: 550px;
     margin: 0;
+    min-width: 550px;
 }
 
 body {
     overflow: scroll;
     padding: 2.5em;
 }
-
-.loading .loader {
-    background-image: url(chrome-extension://__MSG_@@extension_id__/images/loader.gif);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 75px;
-    height: 200px;
-}
+    body.loading * {
+        display: none !important;
+    }
+    body.loading::before {
+        background-image: url(chrome-extension://__MSG_@@extension_id__/images/loader.gif);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 75px;
+        content: '';
+        display: block !important;
+        height: 200px;
+    }
+    body[data-tilder-message] * {
+        display: none !important;
+    }
+    body[data-tilder-message]::before {
+        content: attr(data-tilder-message);
+    }

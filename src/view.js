@@ -29,6 +29,12 @@ class View {
 	}
 
 	update(data) {
+		if (!data.success) {
+			this.node.setAttribute('data-tilder-message', data.message)
+			return
+		}
+		
+		this.node.removeAttribute('data-tilder-message')
 		document.getElementById('tilder-title').innerText = data.title
 		document.getElementById('tilder-subtitle').innerText = 'Summarized a ' + data.originalWordCount + ' word document in ' + data.summaryWordCount + ' words, cutting read time by ' + Math.round((data.originalWordCount - data.summaryWordCount) / 200, 2) + ' minutes'
 		document.getElementById('tilder-description').innerText = data.description
