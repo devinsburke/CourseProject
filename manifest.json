@@ -23,9 +23,9 @@
         "style.css"
       ],
       "js": [
+        "./libraries/escrape.js",
         "./src/nlp.js",
         "./src/processor.js",
-        "./src/scraper.js",
         "./src/view.js",
         "main.js"
       ]

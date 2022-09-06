@@ -42,8 +42,13 @@ tilder *,
 	line-height: 1.35 !important;
 	opacity: 1 !important;
 	-webkit-font-smoothing: unset !important;
+	text-align: left !important;
 	text-size-adjust: none !important;
 	text-rendering: unset !important;
+}
+tilder br,
+.tilder br {
+	display: none !important;
 }
 tilder {
 	background: #fff !important;
