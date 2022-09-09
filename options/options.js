@@ -8,7 +8,7 @@ async function generateSettingElements() {
 }
 
 async function createSettingElement(key, setting) {
-    const element = {}
+    var element = {}
 
     switch (setting.type) {
         case 'boolean': {
